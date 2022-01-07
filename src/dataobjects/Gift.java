@@ -4,12 +4,12 @@ import enums.Category;
 
 public class Gift {
     /* Fields */
-    String productName = "";
-    double price = 0d;
-    Category giftCategory;
+    private String productName = "";
+    private Double price = 0d;
+    private Category giftCategory;
 
     /* Constructor */
-    public Gift(String productName, double price, Category giftCategory) {
+    public Gift(String productName, Double price, Category giftCategory) {
         this.productName = productName;
         this.price = price;
         this.giftCategory = giftCategory;
@@ -28,7 +28,7 @@ public class Gift {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

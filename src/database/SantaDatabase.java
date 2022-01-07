@@ -1,5 +1,6 @@
 package database;
 
+import dataobjects.AnnualChange;
 import dataobjects.Child;
 import dataobjects.Gift;
 
@@ -11,14 +12,10 @@ public class SantaDatabase {
     public static SantaDatabase instance = null;
 
     /* Fields */
-    int numberOfYears = 0;
-    double santaBudget = 0d;
-    struct initialData {
-        
-    }
-    List<Child> childrenList = null;
-    List<Gift> giftsList = null;
-    List<String> citiesList = null;
+    private Integer numberOfYears = 0;
+    private Double santaBudget = 0d;
+    private initialData startingData = null;
+    private List<AnnualChange> annualChanges = null;
 
     /* Don't allow object creation */
     private SantaDatabase() {};

@@ -3,6 +3,8 @@ package dataobjects;
 import enums.Category;
 import enums.Cities;
 
+import java.util.List;
+
 public class Child {
     /* Fields */
     private int id = 0;
@@ -11,19 +13,19 @@ public class Child {
     private int age = 0;
     private Cities city = null;
     private double niceScore = 0;
-    private Category giftsPreferences = null;
+    private List<Category> giftsPreferences = null;
 
     /* Builder pattern */
     public static class Builder {
-        private int id = 0;
+        private Integer id = 0;
         private String lastName = "";
         private String firstName = "";
-        private int age = 0;
+        private Integer age = 0;
         private Cities city = null;
-        private double niceScore = 0;
-        private Category giftsPreferences = null;
+        private Double niceScore = 0d;
+        private List<Category> giftsPreferences = null;
 
-        public Builder(int id, String lastName, String firstName, int age, Cities city, double niceScore, Category giftsPreferences) {
+        public Builder(Integer id, String lastName, String firstName, Integer age, Cities city, Double niceScore, List<Category> giftsPreferences) {
             this.id = id;
             this.lastName = lastName;
             this.firstName = firstName;
@@ -33,7 +35,7 @@ public class Child {
             this.giftsPreferences = giftsPreferences;
         }
 
-        public Builder idSet(int id) {
+        public Builder idSet(Integer id) {
             this.id = id;
             return this;
         }
@@ -48,7 +50,7 @@ public class Child {
             return this;
         }
 
-        public Builder ageSet(int age) {
+        public Builder ageSet(Integer age) {
             this.age = age;
             return this;
         }
@@ -58,12 +60,12 @@ public class Child {
             return this;
         }
 
-        public Builder niceScoreSet(double niceScore) {
+        public Builder niceScoreSet(Double niceScore) {
             this.niceScore = niceScore;
             return this;
         }
 
-        public Builder giftsPreferencesSet(Category giftsPreferences) {
+        public Builder giftsPreferencesSet(List<Category> giftsPreferences) {
             this.giftsPreferences = giftsPreferences;
             return this;
         }
@@ -89,7 +91,7 @@ public class Child {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -113,7 +115,7 @@ public class Child {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -129,15 +131,15 @@ public class Child {
         return niceScore;
     }
 
-    public void setNiceScore(double niceScore) {
+    public void setNiceScore(Double niceScore) {
         this.niceScore = niceScore;
     }
 
-    public Category getGiftsPreferences() {
+    public List<Category> getGiftsPreferences() {
         return giftsPreferences;
     }
 
-    public void setGiftsPreferences(Category giftsPreferences) {
+    public void setGiftsPreferences(List<Category> giftsPreferences) {
         this.giftsPreferences = giftsPreferences;
     }
 }
