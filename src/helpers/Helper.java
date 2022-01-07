@@ -66,10 +66,12 @@ public class Helper {
         for(Gift my_gift : database.getStartingData().getGiftsList()) {
             System.out.println(my_gift);
         }
-        for(AnnualChange my_change : database.getAnnualChanges()) {
-            System.out.println(my_change);
+        if(database.getAnnualChanges() != null) {
+            for (AnnualChange my_change : database.getAnnualChanges()) {
+                System.out.println(my_change);
+            }
         }
-        System.out.printf("\n\n========================== DEBUG ==================================\n\n");
 
+        System.out.printf("\n\n========================== DEBUG ==================================\n\n");
     }
 }

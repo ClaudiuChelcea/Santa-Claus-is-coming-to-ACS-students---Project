@@ -2,10 +2,8 @@ package inputoutput;
 
 import database.SantaDatabase;
 import database.initialData;
-import dataobjects.AnnualChange;
-import dataobjects.Child;
-import dataobjects.ChildUpdate;
-import dataobjects.Gift;
+import database_interfaces.Observer;
+import dataobjects.*;
 import enums.Category;
 import enums.Cities;
 import helpers.Helper;

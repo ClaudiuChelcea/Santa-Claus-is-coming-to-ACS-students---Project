@@ -5,6 +5,7 @@ import database_interfaces.Observer;
 import dataobjects.SantaChildDatabase;
 import dataobjects.AnnualChange;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /* Singleton class to manage the database from the json */
@@ -12,19 +13,12 @@ public class SantaDatabase implements Observable {
 
     public static SantaDatabase instance = null;
 
-    /*
-        For now, I will only use one observer.
-        In the future, I can add more observers if needed, since the
-        code is written this way, for more observers.
-     */
-    private static Observer my_observer = null;
-
     /* Fields */
     private Integer numberOfYears = 0;
     private Double santaBudget = 0d;
     private initialData startingData = null;
     private List<AnnualChange> annualChanges = null;
-    private List<Observer> observers = null;
+    private List<Observer> observers = new ArrayList<>();
 
     /* Don't allow object creation */
     private SantaDatabase() {}
@@ -78,6 +72,7 @@ public class SantaDatabase implements Observable {
     @Override
     public void addObserver(Observer new_observer) {
         observers.add(new_observer);
+        notifyObservers();
     }
 
     @Override

@@ -3,7 +3,11 @@ package main;
 import checker.Checker;
 import common.Constants;
 import database.SantaDatabase;
+import database_interfaces.Observer;
+import dataobjects.SantaChildDatabase;
 import inputoutput.InfoReaderWriter;
+
+import javax.xml.crypto.Data;
 
 /**
  * Class used to run the code
@@ -34,7 +38,15 @@ public final class Main {
             /* READ */
             my_reader.readInfo(database, inFile);
 
+            /* Add observer */
+            database.addObserver(new SantaChildDatabase(database.getStartingData().getChildrenList()));
+
             /* EXECUTE */
+            for(int j = 0; j < SantaDatabase.getInstance().getNumberOfYears(); ++j) {
+                SantaChildDatabase.giveGifts();
+                SantaChildDatabase.increaseAge();
+                SantaChildDatabase.executeUpdate();
+            }
 
             /* WRITE OUTPUT */
             my_reader.writeInfo(database, outFile);
