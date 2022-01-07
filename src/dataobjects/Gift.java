@@ -39,4 +39,9 @@ public class Gift {
     public void setGiftCategory(Category giftCategory) {
         this.giftCategory = giftCategory;
     }
+
+    @Override
+    public String toString() {
+        return "Gift: " + productName + " with price: " + price + " category: " + giftCategory;
+    }
 }

@@ -1,6 +1,12 @@
 package helpers;
 
+import database.SantaDatabase;
+import dataobjects.AnnualChange;
+import dataobjects.Child;
+import dataobjects.Gift;
+import enums.Category;
 import enums.Cities;
+import jdk.swing.interop.SwingInterOpUtils;
 
 public class Helper {
     public static Cities getCity(String city_name) {
@@ -28,5 +34,42 @@ public class Helper {
             default:
                 return null;
         }
+    }
+
+    public static Category getCategory(String category) {
+        switch (category) {
+            case "Board Games":
+                return Category.BOARD_GAMES;
+            case "Books":
+                return Category.BOOKS;
+            case "Clothes":
+                return Category.CLOTHES;
+            case "Sweets":
+                return Category.SWEETS;
+            case "Technology":
+                return Category.TECHNOLOGY;
+            case "Toys":
+                return Category.TOYS;
+            default:
+                return null;
+        }
+    }
+
+    public static void printDatabase(SantaDatabase database) {
+        System.out.printf("\n\n========================== DEBUG ==================================\n\n");
+        System.out.println("Number of years: " + database.getNumberOfYears());
+        System.out.println("SantaBudget: " + database.getSantaBudget());
+        System.out.println("Initial data:");
+        for(Child my_child : database.getStartingData().getChildrenList()) {
+            System.out.println(my_child);
+        }
+        for(Gift my_gift : database.getStartingData().getGiftsList()) {
+            System.out.println(my_gift);
+        }
+        for(AnnualChange my_change : database.getAnnualChanges()) {
+            System.out.println(my_change);
+        }
+        System.out.printf("\n\n========================== DEBUG ==================================\n\n");
+
     }
 }

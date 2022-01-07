@@ -49,4 +49,22 @@ public class AnnualChange {
     public void setChildrenUpdates(List<ChildUpdate> childrenUpdates) {
         this.childrenUpdates = childrenUpdates;
     }
+
+    @Override
+    public String toString() {
+
+        String out = "AnnualChange with new budget: " + newSantaBudget;
+        for(var Gift: newGifts) {
+            out = out + " " + Gift;
+        }
+        for(var Child : newChildren) {
+            out = out + " " + Child;
+        }
+
+        for(var Update : childrenUpdates) {
+            out = out + " " + Update;
+        }
+
+        return out;
+    }
 }

@@ -2,6 +2,7 @@ package database;
 
 import dataobjects.Child;
 import dataobjects.Gift;
+import enums.Cities;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class initialData {
     /* Fields */
     private List<Child> childrenList = null;
     private List<Gift> giftsList = null;
-    private List<String> citiesList = null;
+    private List<Cities> citiesList = null;
 
     /* Constructor */
     public initialData() {}
@@ -32,11 +33,11 @@ public class initialData {
         this.giftsList = giftsList;
     }
 
-    public List<String> getCitiesList() {
+    public List<Cities> getCitiesList() {
         return citiesList;
     }
 
-    public void setCitiesList(List<String> citiesList) {
+        public void setCitiesList(List<Cities> citiesList) {
         this.citiesList = citiesList;
     }
 }

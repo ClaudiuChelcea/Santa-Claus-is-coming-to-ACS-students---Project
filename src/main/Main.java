@@ -26,7 +26,7 @@ public final class Main {
         InfoReaderWriter my_reader = new InfoReaderWriter();
 
         /* Execute tests */
-        for(int i = 0; i < Constants.TESTS_NUMBER; ++i) {
+        for(int i = 1; i < Constants.TESTS_NUMBER; ++i) {
             /* Input and output files */
             String inFile = Constants.INPUT_PATH + i + Constants.FILE_EXTENSION;
             String outFile = Constants.OUTPUT_PATH + i + Constants.FILE_EXTENSION;

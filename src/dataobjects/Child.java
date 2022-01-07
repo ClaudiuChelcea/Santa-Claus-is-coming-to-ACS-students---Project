@@ -142,4 +142,19 @@ public class Child {
     public void setGiftsPreferences(List<Category> giftsPreferences) {
         this.giftsPreferences = giftsPreferences;
     }
+
+    @Override
+    public String toString() {
+        String out = "Child id: " + id +
+                " name: " + lastName + " " + firstName + " " +
+                " age: " + age + " city: " + city + " niceScore: " + niceScore + " giftPreferences: ";
+        for(Category giftPreference: giftsPreferences) {
+            out = out + giftPreference + ", ";
+        }
+
+        return out;
+    }
+
+    /* Default constructor to be able to extend the class */
+    public Child() {};
 }
