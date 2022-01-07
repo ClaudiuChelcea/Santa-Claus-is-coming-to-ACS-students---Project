@@ -27,4 +27,37 @@ public class SantaDatabase {
         }
         return instance;
     }
+
+    /* Getters and setters */
+    public Integer getNumberOfYears() {
+        return numberOfYears;
+    }
+
+    public void setNumberOfYears(Integer numberOfYears) {
+        this.numberOfYears = numberOfYears;
+    }
+
+    public Double getSantaBudget() {
+        return santaBudget;
+    }
+
+    public void setSantaBudget(Double santaBudget) {
+        this.santaBudget = santaBudget;
+    }
+
+    public initialData getStartingData() {
+        return startingData;
+    }
+
+    public void setStartingData(initialData startingData) {
+        this.startingData = startingData;
+    }
+
+    public List<AnnualChange> getAnnualChanges() {
+        return annualChanges;
+    }
+
+    public void setAnnualChanges(List<AnnualChange> annualChanges) {
+        this.annualChanges = annualChanges;
+    }
 }

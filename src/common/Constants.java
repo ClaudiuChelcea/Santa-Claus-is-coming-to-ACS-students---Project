@@ -1,6 +1,9 @@
 package common;
 
+import java.security.PublicKey;
+
 public final class Constants {
+    public static final String INPUT_PATH = "tests/test";
     public static final String OUTPUT_PATH = "output/out_";
     public static final String REF_PATH = "ref/ref_test";
     public static final String FILE_EXTENSION = ".json";
@@ -14,5 +17,4 @@ public final class Constants {
     private Constants() {
         //constructor for checkstyle
     }
-
 }
