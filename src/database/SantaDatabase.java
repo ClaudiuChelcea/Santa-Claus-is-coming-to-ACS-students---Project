@@ -18,7 +18,7 @@ public class SantaDatabase {
     private List<AnnualChange> annualChanges = null;
 
     /* Don't allow object creation */
-    private SantaDatabase() {};
+    private SantaDatabase() {}
 
     /* Return the unique instance of the singleton */
     public static SantaDatabase getInstance() {

@@ -34,7 +34,7 @@ public enum Cities {
     @JsonProperty("Oradea")
     ORADEA("Oradea");
 
-    private String value;
+    private final String value;
 
     Cities(final String value) {
         this.value = value;
