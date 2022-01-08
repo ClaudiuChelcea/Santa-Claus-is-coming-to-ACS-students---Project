@@ -63,6 +63,26 @@ public class Helper {
         }
     }
 
+    public static String getCategoryName(Category category)
+    {
+        switch(category) {
+            case BOARD_GAMES:
+                return "Board Games";
+            case BOOKS:
+                return "Books";
+            case CLOTHES:
+                return "Clothes";
+            case SWEETS:
+                return "Sweets";
+            case TECHNOLOGY:
+                return "Technology";
+            case TOYS:
+                return "Toys";
+            default:
+                return null;
+        }
+    }
+
     public static Category getCategory(String category) {
         switch (category) {
             case "Board Games":

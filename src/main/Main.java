@@ -38,6 +38,7 @@ public final class Main {
             String outFile = Constants.OUTPUT_PATH + i + Constants.FILE_EXTENSION;
 
             /* READ */
+            database.clear();
             my_reader.readInfo(database, inFile);
 
             /* Refresh update for new tests */
@@ -51,10 +52,10 @@ public final class Main {
                 SantaChildDatabase.giveGifts();
                 SantaChildDatabase.increaseAge();
                 SantaChildDatabase.executeUpdate();
-
-//              /* WRITE OUTPUT */
-                my_reader.writeInfo(database, outFile);
             }
+
+            /* WRITE OUTPUT */
+            my_reader.writeInfo(database, outFile);
           }
 //
 //        /* Calculate score */

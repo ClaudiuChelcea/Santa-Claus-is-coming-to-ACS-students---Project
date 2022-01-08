@@ -1,13 +1,11 @@
 package dataobjects;
 
 import database.SantaDatabase;
-import database.initialData;
-import dataobjects.Child;
 import enums.Category;
 import enums.ChildStage;
 import helpers.Helper;
+import lombok.val;
 
-import java.net.NoRouteToHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +13,7 @@ public class SantaChildView extends Child {
     /* Fields */
     private ChildStage lifeStage = null;
     private List<Double> istoricScoruriCumintenie = new ArrayList<>();
-    private Double averageScore = 0d;
+    private Double individualAverageScore = 0d;
     private Double my_budget = 0d;
 
     /* Constructor */
@@ -34,8 +32,8 @@ public class SantaChildView extends Child {
             setLifeStage();
             if (this.getNiceScore() != 0)
                 istoricScoruriCumintenie.add(this.getNiceScore());
-            calculateAverageScore();
-            calculateBudget();
+            calculateIndividualAverageScore();
+            setMy_budget(this.getIndividualAverageScore() * SantaDatabase.instance.getSantaBudget() / SantaChildDatabase.getGeneralAverageScore());
         }
     }
 
@@ -54,15 +52,15 @@ public class SantaChildView extends Child {
     }
 
     /* Calculate averageScore */
-    void calculateAverageScore() {
+    void calculateIndividualAverageScore() {
         if (this.lifeStage == ChildStage.BABY) {
-            this.averageScore = 10d;
+            this.individualAverageScore = 10d;
         } else if (this.lifeStage == ChildStage.KID) {
             Double sum_grades = 0d;
             for (Double grade : istoricScoruriCumintenie) {
                 sum_grades += grade;
             }
-            this.averageScore = sum_grades / istoricScoruriCumintenie.size();
+            this.individualAverageScore = sum_grades / istoricScoruriCumintenie.size();
         } else if (this.lifeStage == ChildStage.TEEN) {
             Double sum_grades = 0d;
             int counter = 1;
@@ -72,7 +70,7 @@ public class SantaChildView extends Child {
                 sum_ct += counter;
                 ++counter;
             }
-            averageScore = sum_grades / sum_ct;
+            this.individualAverageScore = sum_grades / sum_ct;
         } else { /* young adult */
             var tmp = this;
             SantaDatabase.getInstance().getStartingData().getChildrenList().remove(tmp);
@@ -82,8 +80,8 @@ public class SantaChildView extends Child {
 
     /* Calculate budget alocated to this child */
     void calculateBudget() {
-        Double budgetUnit = SantaDatabase.getInstance().getSantaBudget() / SantaChildDatabase.getAverageScore();
-        this.my_budget = averageScore * budgetUnit;
+        Double budgetUnit = SantaDatabase.getInstance().getSantaBudget() / SantaChildDatabase.getGeneralAverageScore();
+        this.my_budget = individualAverageScore * budgetUnit;
     }
 
     /* Getters and setters */
@@ -99,16 +97,18 @@ public class SantaChildView extends Child {
         return istoricScoruriCumintenie;
     }
 
-    public Double getAverageScore() {
-        return averageScore;
+    public Double getIndividualAverageScore() {
+        calculateIndividualAverageScore();
+        return individualAverageScore;
     }
 
-    public void setAverageScore(Double averageScore) {
-        this.averageScore = averageScore;
+    public void setIndividualAverageScore(Double individualAverageScore) {
+        this.individualAverageScore = individualAverageScore;
     }
 
     public Double getMy_budget() {
-        return my_budget;
+            calculateBudget();
+            return my_budget;
     }
 
     public void setMy_budget(Double my_budget) {
@@ -133,8 +133,8 @@ public class SantaChildView extends Child {
             out = out + el + " ";
         }
 
-        calculateAverageScore();
-        out += "| Average score: " + averageScore;
+        calculateIndividualAverageScore();
+        out += "| Average score: " + individualAverageScore;
         calculateBudget();
         out += " | Budget: " + my_budget + ".";
 

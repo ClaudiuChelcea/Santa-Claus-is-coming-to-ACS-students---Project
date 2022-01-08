@@ -5,6 +5,7 @@ import database_interfaces.Observer;
 import dataobjects.Child;
 import dataobjects.SantaChildDatabase;
 import dataobjects.AnnualChange;
+import dataobjects.SantaChildView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class SantaDatabase implements Observable {
     private List<AnnualChange> annualChanges = null;
     private List<Observer> observers = new ArrayList<>();
     public static int updateNumber = 0;
-    public static List<List<Child>> anual_childs = new ArrayList<>();
+    public static List<List<SantaChildView>> anual_childs = new ArrayList<>();
 
     /* Don't allow object creation */
     private SantaDatabase() {}
@@ -67,13 +68,28 @@ public class SantaDatabase implements Observable {
 
     public void setAnnualChanges(List<AnnualChange> annualChanges) {
         this.annualChanges = annualChanges;
-        notifyObservers();
+    }
+
+    public void clear() {
+        numberOfYears = 0;
+        santaBudget = 0d;
+        startingData = null;
+        annualChanges = null;
+        observers = new ArrayList<>();
+        updateNumber = 0;
+        anual_childs = new ArrayList<>();
     }
 
     /* Observer methods */
     @Override
     public void addObserver(Observer new_observer) {
-        observers.add(new_observer);
+        /* Limit to only one obsever in this project step */
+        if(observers.size() == 1) {
+            observers.clear();
+            observers.add(new_observer);
+        } else {
+            observers.add(new_observer);
+        }
         notifyObservers();
     }
 

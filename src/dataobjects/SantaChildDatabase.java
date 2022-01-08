@@ -1,9 +1,7 @@
 package dataobjects;
 
 import database.SantaDatabase;
-import database.initialData;
 import database_interfaces.Observer;
-import enums.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,33 +9,47 @@ import java.util.List;
 public class SantaChildDatabase implements Observer {
     /* Fields */
     public static List<SantaChildView> newChildList = null;
+    public static List<SantaChildView> prevGeneration = null;
 
     /* Constructor */
     public SantaChildDatabase(List<Child> children) {
         newChildList = new ArrayList<>();
         for(var child : children) {
+            if(child.getAge() > 18)
+                continue;
             var new_child = new SantaChildView(child);
+
+            new_child.calculateBudget();
             newChildList.add(new_child);
         }
+        SantaDatabase.anual_childs.add(newChildList);
     }
 
     @Override
     public void update(List<Child> children) {
         newChildList = new ArrayList<>();
         for(var child : children) {
+            if(child.getAge() > 18)
+                continue;
             var new_child = new SantaChildView(child);
+            new_child.calculateBudget();
             newChildList.add(new_child);
         }
     }
 
-    static Double getAverageScore() {
+    public static Double getGeneralAverageScore() {
         Double averageScoreSum = 0d;
-        for(var child : newChildList) {
-            child.calculateAverageScore();
-            averageScoreSum += child.getAverageScore();
+        var iterator = newChildList.iterator();
+        while(iterator.hasNext()) {
+            var child = iterator.next();
+            averageScoreSum += child.getIndividualAverageScore();
         }
 
-        return averageScoreSum / newChildList.size();
+        Double answer = averageScoreSum / newChildList.size();
+        if(answer == 0)
+            return 1d;
+        else
+            return answer;
     }
 
     public static void giveGifts() {
@@ -95,19 +107,23 @@ public class SantaChildDatabase implements Observer {
     }
 
     public static void increaseAge() {
-        for(var child : SantaDatabase.getInstance().getStartingData().getChildrenList()) {
-            int new_age = child.getAge() + 1;
+        var iterator = SantaDatabase.getInstance().getStartingData().getChildrenList().iterator();
+        while(iterator.hasNext()) {
+            var tmp = iterator.next();
+            int new_age = tmp.getAge() + 1;
             if (new_age > 18) {
-                SantaDatabase.getInstance().getStartingData().getChildrenList().remove(child);
+                iterator.remove();
             } else {
-                child.setAge(new_age);
+                tmp.setAge(new_age);
             }
         }
 
-        for(var child : newChildList) {
+        var iterator2 = newChildList.iterator();
+        while(iterator2.hasNext()) {
+            var child = iterator2.next();
             int new_Age = child.getAge() + 1;
             if(new_Age > 18) {
-                newChildList.remove(child);
+                iterator2.remove();
             } else {
                 child.setAge(new_Age);
             }
@@ -117,16 +133,24 @@ public class SantaChildDatabase implements Observer {
     public static void executeUpdate() {
         AnnualChange newChange = new AnnualChange(SantaDatabase.getInstance().getAnnualChanges().get(SantaDatabase.updateNumber));
 
-        /* Save last year data */
-        SantaDatabase.anual_childs.add(SantaDatabase.getInstance().getStartingData().getChildrenList());
-
         /* Set new budget */
         SantaDatabase.getInstance().setSantaBudget(newChange.getNewSantaBudget());
 
         /* Add children */
         for(var newchild : newChange.getNewChildren()) {
             if(newchild.getAge() <= 18) {
-                SantaDatabase.getInstance().getStartingData().getChildrenList().add(newchild);
+                var iterator = SantaDatabase.getInstance().getStartingData().getChildrenList().iterator();
+                Boolean found = false;
+                while (iterator.hasNext()) {
+                    var tmp = iterator.next();
+                    if (tmp.getId() == newchild.getId()) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (found == false) {
+                    SantaDatabase.getInstance().getStartingData().getChildrenList().add(newchild);
+                }
             }
         }
 
@@ -134,6 +158,7 @@ public class SantaChildDatabase implements Observer {
         newChildList = new ArrayList<>();
         for(var child : SantaDatabase.getInstance().getStartingData().getChildrenList()) {
             var new_child = new SantaChildView(child);
+            new_child.calculateBudget();
             newChildList.add(new_child);
         }
 
@@ -163,11 +188,14 @@ public class SantaChildDatabase implements Observer {
         }
 
         ++SantaDatabase.updateNumber;
+
+        /* Add new year step to the list */
+        SantaDatabase.anual_childs.add(newChildList);
     }
 
     public static void calculateAverageScore() {
         for(var child : newChildList) {
-            child.calculateAverageScore();
+            child.calculateIndividualAverageScore();
             child.calculateBudget();
         }
     }

@@ -4,8 +4,6 @@
     <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/SantaDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/SantaDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataobjects/Child.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/Child.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataobjects/Gift.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/Gift.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Helper.java" afterDir="false" />
@@ -52,6 +50,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -108,7 +107,24 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/Main.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.json.simple.JSONObject" memberName="entrySet" />
+        <PinnedItemInfo parentTag="java.lang.Double" memberName="value" />
+        <PinnedItemInfo parentTag="org.json.simple.JSONObject" memberName="table" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="obj.table" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
