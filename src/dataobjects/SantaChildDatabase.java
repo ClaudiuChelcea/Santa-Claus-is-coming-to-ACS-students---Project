@@ -9,7 +9,6 @@ import java.util.List;
 public class SantaChildDatabase implements Observer {
     /* Fields */
     public static List<SantaChildView> newChildList = null;
-    public static List<SantaChildView> prevGeneration = null;
 
     /* Constructor */
     public SantaChildDatabase(List<Child> children) {
@@ -22,7 +21,12 @@ public class SantaChildDatabase implements Observer {
             new_child.calculateBudget();
             newChildList.add(new_child);
         }
-        SantaDatabase.anual_childs.add(newChildList);
+
+        for(var el : newChildList) {
+            el.calculateBudget();
+        }
+
+        SantaDatabase.anual_childs.add(SantaDatabase.anual_childs.size(), newChildList);
     }
 
     @Override
@@ -37,19 +41,13 @@ public class SantaChildDatabase implements Observer {
         }
     }
 
-    public static Double getGeneralAverageScore() {
-        Double averageScoreSum = 0d;
-        var iterator = newChildList.iterator();
-        while(iterator.hasNext()) {
-            var child = iterator.next();
-            averageScoreSum += child.getIndividualAverageScore();
+    public static double getGeneralAverageScore() {
+        double averageScoreSum = 0;
+        for(var item : newChildList) {
+            averageScoreSum += item.getIndividualAverageScore();
         }
 
-        Double answer = averageScoreSum / newChildList.size();
-        if(answer == 0)
-            return 1d;
-        else
-            return answer;
+        return averageScoreSum;
     }
 
     public static void giveGifts() {
@@ -190,13 +188,10 @@ public class SantaChildDatabase implements Observer {
         ++SantaDatabase.updateNumber;
 
         /* Add new year step to the list */
-        SantaDatabase.anual_childs.add(newChildList);
-    }
-
-    public static void calculateAverageScore() {
-        for(var child : newChildList) {
-            child.calculateIndividualAverageScore();
-            child.calculateBudget();
+        for(var el : newChildList) {
+            el.calculateBudget();
         }
+
+        SantaDatabase.anual_childs.add(SantaDatabase.anual_childs.size(), newChildList);
     }
 }

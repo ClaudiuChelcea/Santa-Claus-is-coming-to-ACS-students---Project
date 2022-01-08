@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/SantaDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/SantaDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
     </list>
@@ -109,14 +107,15 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/Main.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="19" />
+          <line>34</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="org.json.simple.JSONObject" memberName="entrySet" />
+        <PinnedItemInfo parentTag="database.SantaDatabase" memberName="annualChanges" />
         <PinnedItemInfo parentTag="java.lang.Double" memberName="value" />
         <PinnedItemInfo parentTag="org.json.simple.JSONObject" memberName="table" />
       </pinned-members>
@@ -124,6 +123,8 @@
     <watches-manager>
       <configuration name="Application">
         <watch expression="obj.table" />
+        <watch expression="newChildList.get(0).firstName" />
+        <watch expression="newChildList.get(0).istoricScoruriCumintenie" />
       </configuration>
     </watches-manager>
   </component>

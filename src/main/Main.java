@@ -52,11 +52,18 @@ public final class Main {
                 SantaChildDatabase.giveGifts();
                 SantaChildDatabase.increaseAge();
                 SantaChildDatabase.executeUpdate();
+
             }
 
             /* WRITE OUTPUT */
+            for(var list_of_children : SantaDatabase.anual_childs) {
+                for(var child : list_of_children) {
+                    System.out.println(child);
+                }
+                System.out.println("\n----------------- New generation ----------------\n");
+            }
             my_reader.writeInfo(database, outFile);
-          }
+        }
 //
 //        /* Calculate score */
 //        Checker.calculateScore();

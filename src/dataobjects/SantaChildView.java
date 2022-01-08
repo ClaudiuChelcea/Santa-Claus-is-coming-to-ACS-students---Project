@@ -80,8 +80,10 @@ public class SantaChildView extends Child {
 
     /* Calculate budget alocated to this child */
     void calculateBudget() {
-        Double budgetUnit = SantaDatabase.getInstance().getSantaBudget() / SantaChildDatabase.getGeneralAverageScore();
-        this.my_budget = individualAverageScore * budgetUnit;
+        double santaBudget = SantaDatabase.getInstance().getSantaBudget();
+        double generalAverageScore = SantaChildDatabase.getGeneralAverageScore();
+        double budgetUnit = santaBudget / generalAverageScore;
+        setMy_budget(individualAverageScore * budgetUnit);
     }
 
     /* Getters and setters */
@@ -133,9 +135,7 @@ public class SantaChildView extends Child {
             out = out + el + " ";
         }
 
-        calculateIndividualAverageScore();
         out += "| Average score: " + individualAverageScore;
-        calculateBudget();
         out += " | Budget: " + my_budget + ".";
 
         return out;
