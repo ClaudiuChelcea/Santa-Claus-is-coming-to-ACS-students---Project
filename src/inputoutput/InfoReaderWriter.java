@@ -10,11 +10,16 @@ import helpers.Helper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import java.lang.reflect.Field;
+import java.util.LinkedHashMap;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class InfoReaderWriter {
@@ -82,6 +87,7 @@ public class InfoReaderWriter {
                 for (var item : giftArray) {
                     giftPreferences.add(Helper.getCategory((String) item));
                 }
+                Collections.reverse(giftPreferences);
 
                 /* Add the child to the list */
                 childList.add(new Child.Builder(id, lastName, firstName, age, city, niceScore, giftPreferences).build());
@@ -192,6 +198,7 @@ public class InfoReaderWriter {
                     for (var item : giftArray) {
                         giftPreferences.add(Helper.getCategory((String) item));
                     }
+                    Collections.reverse(giftPreferences);
 
                     /* Add the child to the list */
                     childList.add(new Child.Builder(id, lastName, firstName, age, city, niceScore, giftPreferences).build());
@@ -226,7 +233,7 @@ public class InfoReaderWriter {
                     for (var item : myPreferencesArray) {
                         newPreferences.add(Helper.getCategory((String) item));
                     }
-
+                    Collections.reverse(newPreferences);
                     updateList.add(new ChildUpdate(id, niceScore, newPreferences));
                 }
 
@@ -242,16 +249,25 @@ public class InfoReaderWriter {
         }
     }
 
+
+
     public void writeInfo(SantaDatabase database, String outputFile) throws IOException {
-        FileWriter file;
+
+        /* JSON change hashmap to linked list */
+        Field changeMap = JSONObject.getClass().getDeclaredField("map");
+        changeMap.setAccessible(true);
+        changeMap.set(JSONObject, new LinkedHashMap<>());
+        changeMap.setAccessible(false);
 
         /* The big box */
         JSONObject obj = new JSONObject();
 
-
-
         /* Array of arrays of children */
         JSONArray annualChildren = new JSONArray();
+
+
+
+
 
         for(int i = 0; i < SantaDatabase.getInstance().getNumberOfYears(); ++i) {
             /* Cream obiect pentru un an */
@@ -352,19 +368,26 @@ public class InfoReaderWriter {
             annualChildren.add(year);
         }
 
+
+
+
+
+
+
         /* Adaugam array-ul annualChildren ca singura componenta a obiectului principal */
         obj.put("annualChildren", annualChildren);
 
         System.out.println(obj.toJSONString());
 
         try {
+            FileWriter file;
             file = new FileWriter(outputFile);
             file.write(obj.toJSONString());
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
 
-
+        // Helper.printDatabase(database);
 
     }
 }

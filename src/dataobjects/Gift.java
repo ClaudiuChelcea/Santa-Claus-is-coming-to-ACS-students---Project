@@ -42,6 +42,6 @@ public class Gift {
 
     @Override
     public String toString() {
-        return "Gift: " + productName + " with price: " + price + " category: " + giftCategory;
+        return "Gift: " + productName + " | Price: " + price + " | Category: " + giftCategory;
     }
 }

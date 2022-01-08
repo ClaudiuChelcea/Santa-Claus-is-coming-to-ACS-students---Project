@@ -2,7 +2,9 @@ package dataobjects;
 
 import enums.Category;
 import enums.Cities;
+import helpers.Helper;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Child {
@@ -145,11 +147,14 @@ public class Child {
 
     @Override
     public String toString() {
-        String out = "Child id: " + id +
-                " name: " + lastName + " " + firstName + " " +
-                " age: " + age + " city: " + city + " niceScore: " + niceScore + " giftPreferences: ";
-        for(Category giftPreference: giftsPreferences) {
-            out = out + giftPreference + ", ";
+        String out = "Child id: " + this.getId() +
+                " | Name: " + this.getLastName() + " " + this.getFirstName() + " " +
+                " | Age: " + this.getAge() + " | City: " + Helper.getCityName(this.getCity()) + " | NiceScore: " + this.getNiceScore() + " | Gift Preferences: ";
+        for(Category giftPreference: this.getGiftsPreferences()) {
+            if(giftPreference == this.getGiftsPreferences().get(this.getGiftsPreferences().size() - 1))
+                out = out + giftPreference;
+            else
+                out = out + giftPreference + ", ";
         }
 
         return out;

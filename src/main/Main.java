@@ -40,25 +40,21 @@ public final class Main {
             /* READ */
             my_reader.readInfo(database, inFile);
 
-//            /* Refresh update for new tests */
-//            SantaDatabase.updateNumber = 0;
-//
-//            /* Add observer */
-//            database.addObserver(new SantaChildDatabase(database.getStartingData().getChildrenList()));
-//
-//            /* EXECUTE */
-//            for(int j = 0; j < SantaDatabase.getInstance().getNumberOfYears(); ++j) {
-//                SantaChildDatabase.giveGifts();
-//                SantaChildDatabase.increaseAge();
-//                SantaChildDatabase.executeUpdate();
-//                SantaChildDatabase.calculateAverageScore();
-//
-//                /* Make sure changes are seen */
-//                SantaDatabase.getInstance().notifyObservers();
-//
-//                /* WRITE OUTPUT */
-//                my_reader.writeInfo(database, outFile);
-//            }
+            /* Refresh update for new tests */
+            SantaDatabase.updateNumber = 0;
+
+            /* Add observer */
+            database.addObserver(new SantaChildDatabase(database.getStartingData().getChildrenList()));
+
+            /* EXECUTE */
+            for(int j = 0; j < SantaDatabase.getInstance().getNumberOfYears(); ++j) {
+                SantaChildDatabase.giveGifts();
+                SantaChildDatabase.increaseAge();
+                SantaChildDatabase.executeUpdate();
+
+//              /* WRITE OUTPUT */
+                my_reader.writeInfo(database, outFile);
+            }
           }
 //
 //        /* Calculate score */

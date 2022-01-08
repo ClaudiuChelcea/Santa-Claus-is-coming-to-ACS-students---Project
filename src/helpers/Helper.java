@@ -36,6 +36,33 @@ public class Helper {
         }
     }
 
+    public static String getCityName(Cities city_name) {
+        switch(city_name) {
+            case BUCURESTI:
+                return "Bucuresti";
+            case CONSTANTA:
+                return "Constanta";
+            case BRAILA:
+                return "Braila";
+            case BRASOV:
+                return "Brasov";
+            case BUZAU:
+                return "Buzau";
+            case CLUJ:
+                return "Cluj";
+            case CRAIOVA:
+                return "Craiova";
+            case IASI:
+                return "Iasi";
+            case ORADEA:
+                return "Oradea";
+            case TIMISOARA:
+                return "Timisoara";
+            default:
+                return null;
+        }
+    }
+
     public static Category getCategory(String category) {
         switch (category) {
             case "Board Games":

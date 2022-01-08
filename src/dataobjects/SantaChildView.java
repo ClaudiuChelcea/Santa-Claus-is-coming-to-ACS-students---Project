@@ -3,7 +3,9 @@ package dataobjects;
 import database.SantaDatabase;
 import database.initialData;
 import dataobjects.Child;
+import enums.Category;
 import enums.ChildStage;
+import helpers.Helper;
 
 import java.net.NoRouteToHostException;
 import java.util.ArrayList;
@@ -12,26 +14,29 @@ import java.util.List;
 public class SantaChildView extends Child {
     /* Fields */
     private ChildStage lifeStage = null;
-    private static List<Double> istoricScoruriCumintenie = new ArrayList<>();
+    private List<Double> istoricScoruriCumintenie = new ArrayList<>();
     private Double averageScore = 0d;
     private Double my_budget = 0d;
 
     /* Constructor */
     public SantaChildView(Child child) {
-        /* Gets default fields */
-        this.setId(child.getId());
-        this.setAge(child.getAge());
-        this.setCity(child.getCity());
-        this.setFirstName(child.getFirstName());
-        this.setGiftsPreferences(child.getGiftsPreferences());
-        this.setNiceScore(child.getNiceScore());
-        this.setLastName(child.getLastName());
+        if((Child) this != child) {
+            /* Gets default fields */
+            this.setId(child.getId());
+            this.setAge(child.getAge());
+            this.setCity(child.getCity());
+            this.setFirstName(child.getFirstName());
+            this.setGiftsPreferences(child.getGiftsPreferences());
+            this.setNiceScore(child.getNiceScore());
+            this.setLastName(child.getLastName());
 
-        /* Applies new modifications */
-        setLifeStage();
-        istoricScoruriCumintenie.add(this.getNiceScore());
-        calculateAverageScore();
-        calculateBudget();
+            /* Applies new modifications */
+            setLifeStage();
+            if (this.getNiceScore() != 0)
+                istoricScoruriCumintenie.add(this.getNiceScore());
+            calculateAverageScore();
+            calculateBudget();
+        }
     }
 
     /* Methods */
@@ -69,7 +74,9 @@ public class SantaChildView extends Child {
             }
             averageScore = sum_grades / sum_ct;
         } else { /* young adult */
-            SantaDatabase.getInstance().getStartingData().getChildrenList().remove(this);
+            var tmp = this;
+            SantaDatabase.getInstance().getStartingData().getChildrenList().remove(tmp);
+            SantaChildDatabase.newChildList.remove(tmp);
         }
     }
 
@@ -92,10 +99,6 @@ public class SantaChildView extends Child {
         return istoricScoruriCumintenie;
     }
 
-    public void setIstoricScoruriCumintenie(List<Double> istoricScoruriCumintenie) {
-        SantaChildView.istoricScoruriCumintenie = istoricScoruriCumintenie;
-    }
-
     public Double getAverageScore() {
         return averageScore;
     }
@@ -110,5 +113,31 @@ public class SantaChildView extends Child {
 
     public void setMy_budget(Double my_budget) {
         this.my_budget = my_budget;
+    }
+
+    @Override
+    public String toString() {
+        String out = "Child id: " + this.getId() +
+                " | Name: " + this.getLastName() + " " + this.getFirstName() + " " +
+                " | Age: " + this.getAge() + " | City: " + Helper.getCityName(this.getCity()) + " | NiceScore: " + this.getNiceScore() + " | Gift Preferences: ";
+        for(Category giftPreference: this.getGiftsPreferences()) {
+            if(giftPreference == this.getGiftsPreferences().get(this.getGiftsPreferences().size() - 1))
+                out = out + giftPreference;
+            else
+                out = out + giftPreference + ", ";
+        }
+
+        out += " | Life stage: " + this.lifeStage.toString() + " | ";
+        out += "Istoric: ";
+        for(var el : istoricScoruriCumintenie) {
+            out = out + el + " ";
+        }
+
+        calculateAverageScore();
+        out += "| Average score: " + averageScore;
+        calculateBudget();
+        out += " | Budget: " + my_budget + ".";
+
+        return out;
     }
 }

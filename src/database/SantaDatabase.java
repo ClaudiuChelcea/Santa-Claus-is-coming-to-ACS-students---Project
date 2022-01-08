@@ -59,7 +59,6 @@ public class SantaDatabase implements Observable {
 
     public void setStartingData(initialData startingData) {
         this.startingData = startingData;
-        notifyObservers();
     }
 
     public List<AnnualChange> getAnnualChanges() {
