@@ -5,9 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkstyle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/checkstyle.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/SantaDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/SantaDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataobjects/AnnualChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/AnnualChange.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Helper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
     </list>

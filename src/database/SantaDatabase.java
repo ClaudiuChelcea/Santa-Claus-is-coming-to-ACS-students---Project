@@ -2,6 +2,7 @@ package database;
 
 import database_interfaces.Observable;
 import database_interfaces.Observer;
+import dataobjects.Child;
 import dataobjects.SantaChildDatabase;
 import dataobjects.AnnualChange;
 
@@ -19,6 +20,8 @@ public class SantaDatabase implements Observable {
     private initialData startingData = null;
     private List<AnnualChange> annualChanges = null;
     private List<Observer> observers = new ArrayList<>();
+    public static int updateNumber = 0;
+    public static List<List<Child>> anual_childs = new ArrayList<>();
 
     /* Don't allow object creation */
     private SantaDatabase() {}

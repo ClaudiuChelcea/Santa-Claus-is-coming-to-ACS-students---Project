@@ -18,6 +18,7 @@ public class SantaChildView extends Child {
 
     /* Constructor */
     public SantaChildView(Child child) {
+        /* Gets default fields */
         this.setId(child.getId());
         this.setAge(child.getAge());
         this.setCity(child.getCity());
@@ -25,8 +26,12 @@ public class SantaChildView extends Child {
         this.setGiftsPreferences(child.getGiftsPreferences());
         this.setNiceScore(child.getNiceScore());
         this.setLastName(child.getLastName());
+
+        /* Applies new modifications */
         setLifeStage();
         istoricScoruriCumintenie.add(this.getNiceScore());
+        calculateAverageScore();
+        calculateBudget();
     }
 
     /* Methods */
@@ -64,7 +69,6 @@ public class SantaChildView extends Child {
             }
             averageScore = sum_grades / sum_ct;
         } else { /* young adult */
-            SantaChildDatabase.newChildList.remove(this);
             SantaDatabase.getInstance().getStartingData().getChildrenList().remove(this);
         }
     }
@@ -73,5 +77,38 @@ public class SantaChildView extends Child {
     void calculateBudget() {
         Double budgetUnit = SantaDatabase.getInstance().getSantaBudget() / SantaChildDatabase.getAverageScore();
         this.my_budget = averageScore * budgetUnit;
+    }
+
+    /* Getters and setters */
+    public ChildStage getLifeStage() {
+        return lifeStage;
+    }
+
+    public void setLifeStage(ChildStage lifeStage) {
+        this.lifeStage = lifeStage;
+    }
+
+    public List<Double> getIstoricScoruriCumintenie() {
+        return istoricScoruriCumintenie;
+    }
+
+    public void setIstoricScoruriCumintenie(List<Double> istoricScoruriCumintenie) {
+        SantaChildView.istoricScoruriCumintenie = istoricScoruriCumintenie;
+    }
+
+    public Double getAverageScore() {
+        return averageScore;
+    }
+
+    public void setAverageScore(Double averageScore) {
+        this.averageScore = averageScore;
+    }
+
+    public Double getMy_budget() {
+        return my_budget;
+    }
+
+    public void setMy_budget(Double my_budget) {
+        this.my_budget = my_budget;
     }
 }

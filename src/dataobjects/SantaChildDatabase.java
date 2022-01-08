@@ -90,12 +90,56 @@ public class SantaChildDatabase implements Observer {
             int new_Age = child.getAge() + 1;
             if(new_Age > 18) {
                 SantaDatabase.getInstance().getStartingData().getChildrenList().remove(child);
-                newChildList.remove(child);
             }
         }
     }
 
     public static void executeUpdate() {
-        
+        AnnualChange newChange = new AnnualChange(SantaDatabase.getInstance().getAnnualChanges().get(SantaDatabase.updateNumber));
+
+        /* Set new budget */
+        SantaDatabase.getInstance().setSantaBudget(newChange.getNewSantaBudget());
+
+        /* Add children */
+        SantaDatabase.anual_childs.add(SantaDatabase.getInstance().getStartingData().getChildrenList());
+        for(var newchild : newChange.getNewChildren()) {
+            if(newchild.getAge() <= 18) {
+                SantaDatabase.getInstance().getStartingData().getChildrenList().add(newchild);
+            }
+        }
+
+        /* Apply children updates */
+        for(var update : newChange.getChildrenUpdates()) {
+            for(var child : SantaDatabase.getInstance().getStartingData().getChildrenList()) {
+                if(child.getId() == update.getId()) {
+                    if(update.getNiceScore() != null) {
+                        child.setNiceScore(update.getNiceScore());
+
+                        for(var new_preference : update.getGiftsPreferences()) {
+                            if(child.getGiftsPreferences().contains(new_preference));
+                                child.getGiftsPreferences().remove(new_preference);
+                        }
+                        for(int i = update.getGiftsPreferences().size() - 1; i >=0; --i) {
+                            child.getGiftsPreferences().add(0, update.getGiftsPreferences().get(i));
+                        }
+                    }
+                }
+            }
+        }
+
+        /* Add new gifts */
+        for(var new_gift : newChange.getNewGifts()) {
+            if(SantaDatabase.getInstance().getStartingData().getGiftsList().contains(new_gift) == false)
+                SantaDatabase.getInstance().getStartingData().getGiftsList().add(new_gift);
+        }
+
+        ++SantaDatabase.updateNumber;
+    }
+
+    public static void calculateAverageScore() {
+        for(var child : newChildList) {
+            child.calculateAverageScore();
+            child.calculateBudget();
+        }
     }
 }

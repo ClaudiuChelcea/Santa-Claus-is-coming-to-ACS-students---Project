@@ -17,6 +17,13 @@ public class AnnualChange {
         this.childrenUpdates = childrenUpdates;
     }
 
+    public AnnualChange(AnnualChange new_annual_change) {
+        this.newSantaBudget = new_annual_change.newSantaBudget;
+        this.newGifts = new_annual_change.newGifts;
+        this.newChildren = new_annual_change.newChildren;
+        this.childrenUpdates = new_annual_change.childrenUpdates;
+    }
+
     /* Getters & setters */
     public Double getNewSantaBudget() {
         return newSantaBudget;

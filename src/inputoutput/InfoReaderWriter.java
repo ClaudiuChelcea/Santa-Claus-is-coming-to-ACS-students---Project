@@ -10,15 +10,12 @@ import helpers.Helper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.w3c.dom.html.HTMLBRElement;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.text.ParseException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static helpers.Helper.getCity;
 
 public class InfoReaderWriter {
     /* Constructor */
@@ -245,7 +242,129 @@ public class InfoReaderWriter {
         }
     }
 
-    public void writeInfo(SantaDatabase database, String outputFile) {
-        Helper.printDatabase(database);
+    public void writeInfo(SantaDatabase database, String outputFile) throws IOException {
+        FileWriter file;
+
+        /* The big box */
+        JSONObject obj = new JSONObject();
+
+
+
+        /* Array of arrays of children */
+        JSONArray annualChildren = new JSONArray();
+
+        for(int i = 0; i < SantaDatabase.getInstance().getNumberOfYears(); ++i) {
+            /* Cream obiect pentru un an */
+            JSONObject year = new JSONObject();
+
+            /* Cream lista de copii */
+            JSONArray children = new JSONArray();
+
+            /* Adaugam toti copii in children */
+            for(var child : SantaDatabase.anual_childs.get(i)) {
+                JSONObject child_json = new JSONObject();
+
+                /* Add fields */
+                child_json.put("id", child.getId());
+                child_json.put("lastName", child.getLastName());
+                child_json.put("firstName", child.getFirstName());
+                child_json.put("city", child.getCity());
+                child_json.put("age", child.getAge());
+                JSONArray giftsPreferences = new JSONArray();
+                for(var preferences : child.getGiftsPreferences()) {
+                    giftsPreferences.add(preferences.name());
+                }
+                var tmp = new SantaChildView(child);
+                child_json.put("giftsPreferences", giftsPreferences);
+                child_json.put("averageScore", tmp.getAverageScore());
+                JSONArray niceScoreHistory = new JSONArray();
+                for(var scoreHistory : tmp.getIstoricScoruriCumintenie()) {
+                    niceScoreHistory.add(scoreHistory);
+                }
+                child_json.put("niceScoreHistory", niceScoreHistory);
+                child_json.put("assignedBudget", tmp.getMy_budget());
+
+                JSONArray receivedGifts = new JSONArray();
+                ArrayList<Gift> mygifts = new ArrayList<>();
+                var preferences = child.getGiftsPreferences();
+                var our_gifts = SantaDatabase.getInstance().getStartingData().getGiftsList();
+                var budget = SantaDatabase.getInstance().getSantaBudget();
+
+                for(var preference : preferences) {
+                    ArrayList<Integer> gift_with_indexes = new ArrayList<>();
+                    int ind = 0;
+                    for(var gift : our_gifts) {
+                        if(preference == gift.getGiftCategory()) {
+                            gift_with_indexes.add(ind);
+                        }
+                        ind++;
+                    }
+
+                    /* No gift in that category */
+                    if(gift_with_indexes.size() == 0)
+                        continue;
+
+                    /* Only one gift in that category */
+                    if(gift_with_indexes.size() == 1)
+                        if(budget >= our_gifts.get(gift_with_indexes.get(0)).getPrice()) {
+                            budget -= our_gifts.get(gift_with_indexes.get(0)).getPrice();
+                            mygifts.add(our_gifts.get(gift_with_indexes.get(0)));
+                        }
+
+                        /* More gifts in that category */
+                        else if(gift_with_indexes.size() > 1) {
+                            List<Gift> list_of_gifts = new ArrayList<>();
+                            for(int k = 0; k < gift_with_indexes.size(); ++k) {
+                                list_of_gifts.add(our_gifts.get(gift_with_indexes.get(k)));
+                            }
+
+                            Double min_price = Double.MAX_VALUE;
+                            for(var gift : list_of_gifts) {
+                                if(min_price > gift.getPrice()) {
+                                    min_price = gift.getPrice();
+                                }
+                            }
+
+                            for(var gift : list_of_gifts) {
+                                if(budget >= min_price && min_price == gift.getPrice()) {
+                                    mygifts.add(gift);
+                                    break;
+                                }
+                            }
+                        }
+                }
+
+                for(var gift : mygifts) {
+                    JSONObject simple_gift = new JSONObject();
+                    simple_gift.put("productName", gift.getProductName());
+                    simple_gift.put("price", gift.getPrice());
+                    simple_gift.put("category", gift.getGiftCategory());
+                    receivedGifts.add(simple_gift);
+                }
+                child_json.put("receivedGifts", receivedGifts);
+                children.add(child_json);
+            }
+
+            /* Add the children list to the year */
+            year.put("children", children);
+
+            /* Adaugam array-ul year in array-ul annualChildren */
+            annualChildren.add(year);
+        }
+
+        /* Adaugam array-ul annualChildren ca singura componenta a obiectului principal */
+        obj.put("annualChildren", annualChildren);
+
+        System.out.println(obj.toJSONString());
+
+        try {
+            file = new FileWriter(outputFile);
+            file.write(obj.toJSONString());
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
     }
 }
