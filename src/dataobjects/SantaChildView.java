@@ -113,6 +113,10 @@ public class SantaChildView extends Child {
             return my_budget;
     }
 
+    public Double getBudget() {
+        return my_budget;
+    }
+
     public void setMy_budget(Double my_budget) {
         this.my_budget = my_budget;
     }

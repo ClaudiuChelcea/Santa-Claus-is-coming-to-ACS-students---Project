@@ -116,21 +116,21 @@ public class SantaChildDatabase implements Observer {
             }
         }
 
-        var iterator2 = newChildList.iterator();
-        while(iterator2.hasNext()) {
-            var child = iterator2.next();
-            int new_Age = child.getAge() + 1;
-            if(new_Age > 18) {
-                iterator2.remove();
-            } else {
-                child.setAge(new_Age);
-            }
-        }
+//        var iterator2 = newChildList.iterator();
+//        while(iterator2.hasNext()) {
+//            var child = iterator2.next();
+//            int new_Age = child.getAge() + 1;
+//            if(new_Age > 18) {
+//                iterator2.remove();
+//            } else {
+//                child.setAge(new_Age);
+//            }
+//        }
     }
 
-    public static void executeUpdate() {
+    public static void executeUpdate(int index) {
         AnnualChange newChange = new AnnualChange(SantaDatabase.getInstance().getAnnualChanges().get(SantaDatabase.updateNumber));
-
+        var base =  SantaDatabase.anual_childs;
         /* Set new budget */
         SantaDatabase.getInstance().setSantaBudget(newChange.getNewSantaBudget());
 
@@ -192,6 +192,6 @@ public class SantaChildDatabase implements Observer {
             el.calculateBudget();
         }
 
-        SantaDatabase.anual_childs.add(SantaDatabase.anual_childs.size(), newChildList);
+        SantaDatabase.anual_childs.add(newChildList);
     }
 }

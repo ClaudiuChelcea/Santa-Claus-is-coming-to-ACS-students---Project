@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/out_1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/out_2.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java" afterDir="false" />
@@ -106,9 +108,14 @@
           <option name="timeStamp" value="1" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/Main.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="22" />
+          <url>file://$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java</url>
+          <line>299</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java</url>
+          <line>329</line>
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -125,6 +132,8 @@
         <watch expression="obj.table" />
         <watch expression="newChildList.get(0).firstName" />
         <watch expression="newChildList.get(0).istoricScoruriCumintenie" />
+        <watch expression="newChildList" language="JAVA" />
+        <watch expression="newChildList" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>

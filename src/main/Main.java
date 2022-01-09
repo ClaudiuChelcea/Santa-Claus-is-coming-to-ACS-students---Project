@@ -32,7 +32,7 @@ public final class Main {
 
         /* Execute tests */
         int nr_tests = Constants.TESTS_NUMBER;
-        for(int i = 1; i <= 1; ++i) {
+        for(int i = 1; i <= 2; ++i) {
             /* Input and output files */
             String inFile = Constants.INPUT_PATH + i + Constants.FILE_EXTENSION;
             String outFile = Constants.OUTPUT_PATH + i + Constants.FILE_EXTENSION;
@@ -51,17 +51,10 @@ public final class Main {
             for(int j = 0; j < SantaDatabase.getInstance().getNumberOfYears(); ++j) {
                 SantaChildDatabase.giveGifts();
                 SantaChildDatabase.increaseAge();
-                SantaChildDatabase.executeUpdate();
-
+                SantaChildDatabase.executeUpdate(j+1);
             }
 
             /* WRITE OUTPUT */
-            for(var list_of_children : SantaDatabase.anual_childs) {
-                for(var child : list_of_children) {
-                    System.out.println(child);
-                }
-                System.out.println("\n----------------- New generation ----------------\n");
-            }
             my_reader.writeInfo(database, outFile);
         }
 //
