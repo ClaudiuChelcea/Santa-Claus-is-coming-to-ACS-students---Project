@@ -28,7 +28,7 @@ public final class Main {
         InfoReaderWriter my_reader = new InfoReaderWriter();
 
         /* Execute tests */
-        for(int i = 1; i <= 4; ++i) {
+        for(int i = 1; i <= Constants.TESTS_NUMBER; ++i) {
             /* Input and output files */
             String inFile = Constants.INPUT_PATH + i + Constants.FILE_EXTENSION;
             String outFile = Constants.OUTPUT_PATH + i + Constants.FILE_EXTENSION;
@@ -44,12 +44,13 @@ public final class Main {
             database.addObserver(new SantaChildDatabase(database.getStartingData().getChildrenList()));
 
             /* EXECUTE */
+            var tmp1 = SantaChildDatabase.newChildList;
             for(int j = 0; j < SantaDatabase.getInstance().getNumberOfYears(); ++j) {
                 SantaChildDatabase.giveGifts();
                 SantaChildDatabase.increaseAge();
                 SantaChildDatabase.executeUpdate(j+1);
             }
-
+            var tmp2 = SantaChildDatabase.newChildList;
             /* WRITE OUTPUT */
             my_reader.writeInfo(database, outFile);
         }

@@ -19,12 +19,13 @@ public class SantaChildDatabase implements Observer {
             var new_child = new SantaChildView(child);
 
             new_child.calculateBudget();
-            giveGiftToChild(new_child);
+
             newChildList.add(new_child);
         }
 
         for(var el : newChildList) {
             el.calculateBudget();
+            giveGiftToChild(el);
         }
 
         SantaDatabase.anual_childs.add(SantaDatabase.anual_childs.size(), newChildList);
@@ -181,7 +182,8 @@ public class SantaChildDatabase implements Observer {
             var old_child = getChildById(old_list, child.getId());
             var new_child = new SantaChildView(child);
             new_child.calculateBudget();
-            new_child.setMy_gifts(old_child.getMy_gifts());
+            if(old_child != null)
+                new_child.setMy_gifts(old_child.getMy_gifts());
             newChildList.add(new_child);
         }
 
