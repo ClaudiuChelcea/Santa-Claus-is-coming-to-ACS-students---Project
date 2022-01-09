@@ -46,8 +46,6 @@ public final class Main {
             /* EXECUTE */
             var tmp1 = SantaChildDatabase.newChildList;
             for(int j = 0; j < SantaDatabase.getInstance().getNumberOfYears(); ++j) {
-                SantaChildDatabase.giveGifts();
-                SantaChildDatabase.increaseAge();
                 SantaChildDatabase.executeUpdate(j+1);
             }
             var tmp2 = SantaChildDatabase.newChildList;

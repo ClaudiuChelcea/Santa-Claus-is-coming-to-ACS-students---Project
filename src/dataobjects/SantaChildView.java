@@ -4,7 +4,6 @@ import database.SantaDatabase;
 import enums.Category;
 import enums.ChildStage;
 import helpers.Helper;
-import lombok.val;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 public class SantaChildView extends Child {
     /* Fields */
     private ChildStage lifeStage = null;
-    private List<Double> istoricScoruriCumintenie = new ArrayList<>();
+    private List<Double> niceScoreHistory = new ArrayList<>();
     private Double individualAverageScore = 0d;
     private Double my_budget = 0d;
     public List<Gift> my_gifts = new ArrayList<>();
@@ -32,11 +31,19 @@ public class SantaChildView extends Child {
             /* Applies new modifications */
             setLifeStage();
             if (this.getNiceScore() != 0)
-                istoricScoruriCumintenie.add(this.getNiceScore());
+                this.niceScoreHistory.add(child.getNiceScore());
             calculateIndividualAverageScore();
             setMy_budget(this.getIndividualAverageScore() * SantaDatabase.instance.getSantaBudget() / SantaChildDatabase.getGeneralAverageScore());
-
         }
+    }
+
+    @Override
+    public double getNiceScore() {
+        Double averageSum = 0d;
+        for(var el : niceScoreHistory) {
+            averageSum += el;
+        }
+        return averageSum / niceScoreHistory.size();
     }
 
     /* Methods */
@@ -59,16 +66,16 @@ public class SantaChildView extends Child {
             this.individualAverageScore = 10d;
         } else if (this.lifeStage == ChildStage.KID) {
             Double sum_grades = 0d;
-            for (Double grade : istoricScoruriCumintenie) {
+            for (Double grade : niceScoreHistory) {
                 sum_grades += grade;
             }
-            this.individualAverageScore = sum_grades / istoricScoruriCumintenie.size();
+            this.individualAverageScore = sum_grades / niceScoreHistory.size();
         } else if (this.lifeStage == ChildStage.TEEN) {
             Double sum_grades = 0d;
             int counter = 1;
             int sum_ct = 0;
-            for (int i = 0; i < istoricScoruriCumintenie.size(); ++i) {
-                sum_grades = sum_grades + istoricScoruriCumintenie.get(i) * counter;
+            for (int i = 0; i < niceScoreHistory.size(); ++i) {
+                sum_grades = sum_grades + niceScoreHistory.get(i) * counter;
                 sum_ct += counter;
                 ++counter;
             }
@@ -97,8 +104,8 @@ public class SantaChildView extends Child {
         this.lifeStage = lifeStage;
     }
 
-    public List<Double> getIstoricScoruriCumintenie() {
-        return istoricScoruriCumintenie;
+    public List<Double> getNiceScoreHistory() {
+        return niceScoreHistory;
     }
 
     public Double getIndividualAverageScore() {
@@ -123,8 +130,8 @@ public class SantaChildView extends Child {
         this.my_budget = my_budget;
     }
 
-    public void setIstoricScoruriCumintenie(List<Double> istoricScoruriCumintenie) {
-        this.istoricScoruriCumintenie = istoricScoruriCumintenie;
+    public void setNiceScoreHistory(List<Double> niceScoreHistory) {
+        this.niceScoreHistory = niceScoreHistory;
     }
 
     public List<Gift> getMy_gifts() {
@@ -149,7 +156,7 @@ public class SantaChildView extends Child {
 
         out += " | Life stage: " + this.lifeStage.toString() + " | ";
         out += "Istoric: ";
-        for(var el : istoricScoruriCumintenie) {
+        for(var el : niceScoreHistory) {
             out = out + el + " ";
         }
 

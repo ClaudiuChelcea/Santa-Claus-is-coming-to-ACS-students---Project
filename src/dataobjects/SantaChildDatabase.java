@@ -124,7 +124,7 @@ public class SantaChildDatabase implements Observer {
         child.setMy_gifts(mygifts);
     }
 
-    public static void giveGifts() { ArrayList<Gift> mygifts = new ArrayList<>();
+    public static void giveGifts() {
         for(var child : newChildList) {
             giveGiftToChild(child);
         }
@@ -152,6 +152,8 @@ public class SantaChildDatabase implements Observer {
     }
 
     public static void executeUpdate(int index) {
+        SantaChildDatabase.increaseAge();
+
         AnnualChange newChange = new AnnualChange(SantaDatabase.getInstance().getAnnualChanges().get(SantaDatabase.updateNumber));
         var base =  SantaDatabase.anual_childs;
         /* Set new budget */
@@ -180,31 +182,33 @@ public class SantaChildDatabase implements Observer {
         newChildList = new ArrayList<>();
         for(var child : SantaDatabase.getInstance().getStartingData().getChildrenList()) {
             var old_child = getChildById(old_list, child.getId());
+            if(old_child == null)
+                continue;
             var new_child = new SantaChildView(child);
+
+            var old_history = old_child.getNiceScoreHistory();
             new_child.calculateBudget();
-            if(old_child != null)
-                new_child.setMy_gifts(old_child.getMy_gifts());
+            new_child.setMy_gifts(old_child.getMy_gifts());
+            new_child.setNiceScoreHistory(old_history);
             newChildList.add(new_child);
         }
 
         /* Apply children updates */
         for(var update : newChange.getChildrenUpdates()) {
-            for(var child : SantaDatabase.getInstance().getStartingData().getChildrenList()) {
-                if(child.getId() == update.getId()) {
-                    if(update.getNiceScore() != null) {
-                        child.setNiceScore(update.getNiceScore());
+            var child = getChildById(update.getId());
+            if(child == null)
+                continue;
+            if(update.getNiceScore() != null)
+                child.getNiceScoreHistory().add(update.getNiceScore());
 
-                        for(var new_preference : update.getGiftsPreferences()) {
-                            if(child.getGiftsPreferences().contains(new_preference));
-                                child.getGiftsPreferences().remove(new_preference);
-                        }
-                        for(int i = update.getGiftsPreferences().size() - 1; i >=0; --i) {
-                            child.getGiftsPreferences().add(0, update.getGiftsPreferences().get(i));
-                        }
-                    }
+                for(var new_preference : update.getGiftsPreferences()) {
+                    if(child.getGiftsPreferences().contains(new_preference));
+                        child.getGiftsPreferences().remove(new_preference);
+                }
+                for(int i = update.getGiftsPreferences().size() - 1; i >=0; --i) {
+                    child.getGiftsPreferences().add(0, update.getGiftsPreferences().get(i));
                 }
             }
-        }
 
         /* Add new gifts */
         for(var new_gift : newChange.getNewGifts()) {
@@ -219,6 +223,8 @@ public class SantaChildDatabase implements Observer {
             el.calculateBudget();
         }
 
+        for(var child : newChildList)
+            giveGiftToChild(child);
         SantaDatabase.anual_childs.add(newChildList);
     }
 }

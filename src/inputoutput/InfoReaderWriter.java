@@ -275,7 +275,7 @@ public class InfoReaderWriter {
                 child_json.put("averageScore", child.getIndividualAverageScore());
 
                 JSONArray niceScoreHistory = new JSONArray();
-                for (var scoreHistory : child.getIstoricScoruriCumintenie()) {
+                for (var scoreHistory : child.getNiceScoreHistory()) {
                     niceScoreHistory.add(scoreHistory);
                 }
                 child_json.put("niceScoreHistory", niceScoreHistory);
