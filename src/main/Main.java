@@ -4,7 +4,6 @@ import checker.Checker;
 import common.Constants;
 import database.SantaDatabase;
 import dataobjects.SantaChildDatabase;
-import helpers.Helper;
 import inputoutput.InfoReaderWriter;
 
 /**
@@ -44,11 +43,9 @@ public final class Main {
             database.addObserver(new SantaChildDatabase(database.getStartingData().getChildrenList()));
 
             /* EXECUTE */
-            var tmp1 = SantaChildDatabase.newChildList;
             for(int j = 0; j < SantaDatabase.getInstance().getNumberOfYears(); ++j) {
                 SantaChildDatabase.executeUpdate(j+1);
             }
-            var tmp2 = SantaChildDatabase.newChildList;
             /* WRITE OUTPUT */
             my_reader.writeInfo(database, outFile);
         }

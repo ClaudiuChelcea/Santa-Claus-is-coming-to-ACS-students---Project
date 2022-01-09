@@ -2,8 +2,10 @@ package dataobjects;
 
 import database.SantaDatabase;
 import database_interfaces.Observer;
+import enums.Category;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SantaChildDatabase implements Observer {
@@ -155,7 +157,7 @@ public class SantaChildDatabase implements Observer {
         SantaChildDatabase.increaseAge();
 
         AnnualChange newChange = new AnnualChange(SantaDatabase.getInstance().getAnnualChanges().get(SantaDatabase.updateNumber));
-        var base =  SantaDatabase.anual_childs;
+
         /* Set new budget */
         SantaDatabase.getInstance().setSantaBudget(newChange.getNewSantaBudget());
 
@@ -201,14 +203,19 @@ public class SantaChildDatabase implements Observer {
             if(update.getNiceScore() != null)
                 child.getNiceScoreHistory().add(update.getNiceScore());
 
-                for(var new_preference : update.getGiftsPreferences()) {
-                    if(child.getGiftsPreferences().contains(new_preference));
-                        child.getGiftsPreferences().remove(new_preference);
-                }
-                for(int i = update.getGiftsPreferences().size() - 1; i >=0; --i) {
-                    child.getGiftsPreferences().add(0, update.getGiftsPreferences().get(i));
-                }
+            for(var new_preference : update.getGiftsPreferences()) {
+                if(child.getGiftsPreferences().contains(new_preference));
+                    child.getGiftsPreferences().remove(new_preference);
             }
+            List<Category> preferences = new ArrayList<>();
+            for(var preference : update.getGiftsPreferences())
+                preferences.add(preference);
+
+            for(var preference : child.getGiftsPreferences())
+                preferences.add(preference);
+
+            child.setGiftsPreferences(preferences);
+        }
 
         /* Add new gifts */
         for(var new_gift : newChange.getNewGifts()) {

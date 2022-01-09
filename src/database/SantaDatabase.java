@@ -61,7 +61,7 @@ public class SantaDatabase implements Observable {
     }
 
     public List<AnnualChange> getAnnualChanges() {
-        return annualChanges;
+         return annualChanges;
     }
 
     public void setAnnualChanges(List<AnnualChange> annualChanges) {

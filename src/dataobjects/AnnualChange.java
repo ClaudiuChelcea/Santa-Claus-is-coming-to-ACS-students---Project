@@ -60,18 +60,18 @@ public class AnnualChange {
     @Override
     public String toString() {
 
-        StringBuilder out = new StringBuilder("AnnualChange with new budget: " + newSantaBudget);
+        String out = "AnnualChange with new budget: " + newSantaBudget;
         for(var Gift: newGifts) {
-            out.append(" ").append(Gift);
+            out = out + " " + Gift;
         }
         for(var Child : newChildren) {
-            out.append(" ").append(Child);
+            out += " " + Child;
         }
 
         for(var Update : childrenUpdates) {
-            out.append(" ").append(Update);
+            out += " " + Update;
         }
 
-        return out.toString();
+        return out;
     }
 }

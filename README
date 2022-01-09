@@ -1,0 +1,60 @@
+# 322CA Chelcea Claudiu-Marian
+# cladiu.chelcea@stud.acs.upb.ro
+
+Flow:
+Implementarea proiectului incepe cu instantierea unei baze de date
+creata prin pattern-ul singleton. Aceasta retine datele neprelucrate
+exact asa cum sunt preluate din fisierele JSON.
+
+De asemenea, acest singleton este, la randul sau, si un observable,
+modificarile lui fiind trimise la observatori, o clasa SantaChildDatabase
+care o extinde pe aceasta, preluand datele acesteia si extinzand
+functionalitatea si operatiile posibile.
+
+Se creaza apoi obiectul InfoReader, care contine cele doua metode de citire
+si scriere intr-un fisier JSON.
+
+Apoi se executa operatiile cerute pentru fiecare fisier dat ca input, adica:
+ - Se citesc datele si se stocheaza in baza de date.
+ - Se adauga un observator (vom folosi numai unul acum, poate fi extins
+ pentru a folosi mai multi daca este nevoie)
+ - Pentru fiecare an, se executa update
+ 	- Prima parte reprezinta incrementarea varstei tuturor copiilor
+	si scoaterea acelora a caror varsta depasteste 18 ani
+	- Se seteaza noul buget al lui Santa
+	- Se adauga noii copii care au varsta potrivita si se updateaza
+	baza de date tinuta de observator
+	- Se updateaza niceScore-ul si preferintele acestora
+	- Se adauga noile cadouri ale lui Santa in lista sa
+	- Se recalculeaza bugetul copiilor si li se ofera noile cadouri
+	- Se pastreaza istoricul in SantaDatabase.anual_childs, acesta fiind
+	folosit pentru afisare
+ - La final, se scriu rezultate in fisierul de output
+
+In final, se calculeaza scorul cu ajutorul checker-ului.
+
+Design:
+
+- Main (se executa apelurile necesare)
+
+- SantaDatabase - contine datele initiale neprelucrate si le transmite
+catre observatori. De asemenea, contine prin delegare o instanta de initialData
+Aceasta baza de date respecta pattern-ul singleton.
+
+- Doua interfete: Observable si Observer pentru implementarea pattern-ului
+
+- Child: folosit in SantaDatabase pentru a primi informatiile unui copil,
+respecta pattern-ul Builder
+
+- ChildUpdate, AnnualChange, Gift - mentin obiectele de acest tip, specificate
+pe OCW
+
+- SantaChildView: O extindere a clasei copil din viziunea lui Santa
+- SantaChildDatabase: contine o lista cu SantaChildView si o prelucreaza
+
+- Enums pt orase, categorii si etape din viata unui copil
+
+- InfoReaderWriter - clasa care mentine metodele de citire si afisare din JSON
+
+- Helper: clasa ajutatoare pentru DEBUGAceasta baza de date respecta pattern-ul singleton.
+

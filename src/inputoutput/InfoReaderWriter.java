@@ -121,7 +121,7 @@ public class InfoReaderWriter {
             List<AnnualChange> annualChanges = new ArrayList<>();
 
             /* Get each change */
-            for (Object change : changes) {
+            for (var change : changes) {
 
                 /* Get each change */
                 JSONObject my_change = (JSONObject) change;
@@ -133,7 +133,7 @@ public class InfoReaderWriter {
                 /* Get new gifts */
                 giftsArray = (JSONArray) my_change.get("newGifts");
                 giftList = new ArrayList<>();
-                for (Object o : giftsArray) {
+                for (var o : giftsArray) {
                     /* Get each gift */
                     JSONObject my_gift = (JSONObject) o;
 
@@ -176,19 +176,28 @@ public class InfoReaderWriter {
                     /* Get nice score */
                     output = (long) my_child.get("niceScore");
                     var tmp_obj = my_child.get("niceScore");
-                    if (tmp_obj == null)
-                        continue;
-                    double niceScore = (double) output;
+                    if (tmp_obj != null) {
+                        double niceScore = (double) output;
+                        /* Get gift preferences */
+                        List<Category> giftPreferences = new ArrayList<>();
+                        JSONArray giftArray = (JSONArray) my_child.get("giftsPreferences");
+                        for (var item : giftArray) {
+                            giftPreferences.add(Helper.getCategory((String) item));
+                        }
 
-                    /* Get gift preferences */
-                    List<Category> giftPreferences = new ArrayList<>();
-                    JSONArray giftArray = (JSONArray) my_child.get("giftsPreferences");
-                    for (var item : giftArray) {
-                        giftPreferences.add(Helper.getCategory((String) item));
+                        /* Add the child to the list */
+                        childList.add(new Child.Builder(id, lastName, firstName, age, city, niceScore, giftPreferences).build());
+                    } else {
+                        /* Get gift preferences */
+                        List<Category> giftPreferences = new ArrayList<>();
+                        JSONArray giftArray = (JSONArray) my_child.get("giftsPreferences");
+                        for (var item : giftArray) {
+                            giftPreferences.add(Helper.getCategory((String) item));
+                        }
+
+                        /* Add the child to the list */
+                        childList.add(new Child.Builder(id, lastName, firstName, age, city, null, giftPreferences).build());
                     }
-
-                    /* Add the child to the list */
-                    childList.add(new Child.Builder(id, lastName, firstName, age, city, niceScore, giftPreferences).build());
                 }
 
                 /* Get new updates */
@@ -201,26 +210,37 @@ public class InfoReaderWriter {
 
                     /* Get id */
                     var tmp = my_update.get("id");
-                    if (tmp == null)
-                        continue;
+
                     output = (long) my_update.get("id");
                     int id = (int) output;
 
                     /* Get new nice score */
                     var tmp_obj = my_update.get("niceScore");
-                    if (tmp_obj == null)
-                        continue;
-                    output = (long) my_update.get("niceScore");
-                    double niceScore = (double) output;
+                    if (tmp_obj != null) {
+                        output = (long) tmp_obj;
+                        double niceScore = (double) output;
 
-                    /* Get new list preferences */
-                    List<Category> newPreferences = new ArrayList<>();
-                    JSONArray myPreferencesArray = (JSONArray) my_update.get("giftsPreferences");
+                        /* Get new list preferences */
+                        List<Category> newPreferences = new ArrayList<>();
+                        JSONArray myPreferencesArray = (JSONArray) my_update.get("giftsPreferences");
 
-                    for (var item : myPreferencesArray) {
-                        newPreferences.add(Helper.getCategory((String) item));
+                        for (var item : myPreferencesArray) {
+                            newPreferences.add(Helper.getCategory((String) item));
+                        }
+                        updateList.add(new ChildUpdate(id, niceScore, newPreferences));
+                    } else {
+                        output = (long) my_update.get("id");
+                        id = (int) output;
+
+                        /* Get new list preferences */
+                        List<Category> newPreferences = new ArrayList<>();
+                        JSONArray myPreferencesArray = (JSONArray) my_update.get("giftsPreferences");
+
+                        for (var item : myPreferencesArray) {
+                            newPreferences.add(Helper.getCategory((String) item));
+                        }
+                        updateList.add(new ChildUpdate(id, null, newPreferences));
                     }
-                    updateList.add(new ChildUpdate(id, niceScore, newPreferences));
                 }
 
                 /* Add the new update to the list of updates */
@@ -236,7 +256,6 @@ public class InfoReaderWriter {
     }
 
     public void writeInfo(SantaDatabase database, String outputFile) {
-
         /* The big box */
         JSONObject obj = new JSONObject();
 
