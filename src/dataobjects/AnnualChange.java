@@ -4,10 +4,10 @@ import java.util.List;
 
 public class AnnualChange {
     /* Fields */
-    private Double newSantaBudget = 0d;
-    private List<Gift> newGifts = null;
-    private List<Child> newChildren = null;
-    private List<ChildUpdate> childrenUpdates = null;
+    private Double newSantaBudget;
+    private List<Gift> newGifts;
+    private List<Child> newChildren;
+    private List<ChildUpdate> childrenUpdates;
 
     /* Constructor */
     public AnnualChange(Double newSantaBudget, List<Gift> newGifts, List<Child> newChildren, List<ChildUpdate> childrenUpdates) {
@@ -60,18 +60,18 @@ public class AnnualChange {
     @Override
     public String toString() {
 
-        String out = "AnnualChange with new budget: " + newSantaBudget;
+        StringBuilder out = new StringBuilder("AnnualChange with new budget: " + newSantaBudget);
         for(var Gift: newGifts) {
-            out = out + " " + Gift;
+            out.append(" ").append(Gift);
         }
         for(var Child : newChildren) {
-            out = out + " " + Child;
+            out.append(" ").append(Child);
         }
 
         for(var Update : childrenUpdates) {
-            out = out + " " + Update;
+            out.append(" ").append(Update);
         }
 
-        return out;
+        return out.toString();
     }
 }

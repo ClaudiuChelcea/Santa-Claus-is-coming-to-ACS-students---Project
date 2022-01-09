@@ -3,12 +3,9 @@ package main;
 import checker.Checker;
 import common.Constants;
 import database.SantaDatabase;
-import database_interfaces.Observer;
 import dataobjects.SantaChildDatabase;
+import helpers.Helper;
 import inputoutput.InfoReaderWriter;
-
-import javax.xml.crypto.Data;
-import java.io.IOException;
 
 /**
  * Class used to run the code
@@ -23,7 +20,7 @@ public final class Main {
      * @param args
      *          the arguments used to call the main method
      */
-    public static void main(final String[] args) throws IOException {
+    public static void main(final String[] args) {
         /* Get the database */
         SantaDatabase database = SantaDatabase.getInstance();
 
@@ -31,8 +28,8 @@ public final class Main {
         InfoReaderWriter my_reader = new InfoReaderWriter();
 
         /* Execute tests */
-        int nr_tests = Constants.TESTS_NUMBER;
-        for(int i = 1; i <= 2; ++i) {
+        var nr_tests = Constants.TESTS_NUMBER;
+        for(int i = 1; i <= 3; ++i) {
             /* Input and output files */
             String inFile = Constants.INPUT_PATH + i + Constants.FILE_EXTENSION;
             String outFile = Constants.OUTPUT_PATH + i + Constants.FILE_EXTENSION;
@@ -57,9 +54,9 @@ public final class Main {
             /* WRITE OUTPUT */
             my_reader.writeInfo(database, outFile);
         }
-//
-//        /* Calculate score */
-//        Checker.calculateScore();
+
+        /* Calculate score */
+        Checker.calculateScore();
     }
 }
 

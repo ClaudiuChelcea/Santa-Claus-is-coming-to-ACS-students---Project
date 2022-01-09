@@ -4,7 +4,6 @@ import enums.Category;
 import enums.Cities;
 import helpers.Helper;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Child {
@@ -19,13 +18,13 @@ public class Child {
 
     /* Builder pattern */
     public static class Builder {
-        private Integer id = 0;
-        private String lastName = "";
-        private String firstName = "";
-        private Integer age = 0;
-        private Cities city = null;
-        private Double niceScore = 0d;
-        private List<Category> giftsPreferences = null;
+        private Integer id;
+        private String lastName;
+        private String firstName;
+        private Integer age;
+        private Cities city;
+        private Double niceScore;
+        private List<Category> giftsPreferences;
 
         public Builder(Integer id, String lastName, String firstName, Integer age, Cities city, Double niceScore, List<Category> giftsPreferences) {
             this.id = id;
@@ -54,11 +53,6 @@ public class Child {
 
         public Builder ageSet(Integer age) {
             this.age = age;
-            return this;
-        }
-
-        public Builder citySet(Cities city) {
-            this.city = city;
             return this;
         }
 
@@ -148,7 +142,7 @@ public class Child {
     @Override
     public String toString() {
         String out = "Child id: " + this.getId() +
-                " | Name: " + this.getLastName() + " " + this.getFirstName() + " " +
+                " | Name: " + this.getLastName() + " " + this.getFirstName() +
                 " | Age: " + this.getAge() + " | City: " + Helper.getCityName(this.getCity()) + " | NiceScore: " + this.getNiceScore() + " | Gift Preferences: ";
         for(Category giftPreference: this.getGiftsPreferences()) {
             if(giftPreference == this.getGiftsPreferences().get(this.getGiftsPreferences().size() - 1))

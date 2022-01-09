@@ -1,7 +1,5 @@
 package common;
 
-import java.security.PublicKey;
-
 public final class Constants {
     public static final String INPUT_PATH = "tests/test";
     public static final String OUTPUT_PATH = "output/out_";

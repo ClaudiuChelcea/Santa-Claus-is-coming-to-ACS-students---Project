@@ -2,8 +2,6 @@ package database;
 
 import database_interfaces.Observable;
 import database_interfaces.Observer;
-import dataobjects.Child;
-import dataobjects.SantaChildDatabase;
 import dataobjects.AnnualChange;
 import dataobjects.SantaChildView;
 
@@ -86,21 +84,14 @@ public class SantaDatabase implements Observable {
         /* Limit to only one obsever in this project step */
         if(observers.size() == 1) {
             observers.clear();
-            observers.add(new_observer);
-        } else {
-            observers.add(new_observer);
         }
+        observers.add(new_observer);
         notifyObservers();
     }
 
     @Override
-    public void removeObserver(Observer new_observer) {
-        observers.remove(new_observer);
-    }
-
-    @Override
     public void notifyObservers() {
-        if(observers != null && observers.isEmpty() == false) {
+        if(observers != null && !observers.isEmpty()) {
             for (var observer : observers) {
                 observer.update(startingData.getChildrenList());
             }

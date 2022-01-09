@@ -1,10 +1,11 @@
 package inputoutput;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import database.SantaDatabase;
 import database.initialData;
-import dataobjects.*;
+import dataobjects.AnnualChange;
+import dataobjects.Child;
+import dataobjects.ChildUpdate;
+import dataobjects.Gift;
 import enums.Category;
 import enums.Cities;
 import helpers.Helper;
@@ -12,12 +13,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-
-import java.util.*;
-
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfoReaderWriter {
     /* Constructor */
@@ -39,7 +38,6 @@ public class InfoReaderWriter {
 
             /* Get number of years */
             long output = (long) jsonObj.get("numberOfYears");
-            ;
             Integer numberOfYears = (int) output;
             database.setNumberOfYears(numberOfYears);
 
@@ -55,9 +53,10 @@ public class InfoReaderWriter {
             /* Children */
             JSONArray children = (JSONArray) initialData.get("children");
             List<Child> childList = new ArrayList<>();
-            for (int i = 0; i < children.size(); ++i) {
+            for (Object child : children) {
                 /* Get each child */
-                JSONObject my_child = (JSONObject) children.get(i);
+                JSONObject my_child = (JSONObject) child;
+                // .out.println(my_child);
 
                 /* Get id */
                 output = (long) my_child.get("id");
@@ -94,9 +93,9 @@ public class InfoReaderWriter {
             /* Gift list */
             JSONArray giftsArray = (JSONArray) initialData.get("santaGiftsList");
             List<Gift> giftList = new ArrayList<>();
-            for (int i = 0; i < giftsArray.size(); ++i) {
+            for (Object o : giftsArray) {
                 /* Get each gift */
-                JSONObject my_gift = (JSONObject) giftsArray.get(i);
+                JSONObject my_gift = (JSONObject) o;
 
                 /* Get product name */
                 String product_name = (String) my_gift.get("productName");
@@ -114,13 +113,6 @@ public class InfoReaderWriter {
 
             startingData.setGiftsList(giftList);
 
-            /* Get cities */
-            List<Cities> cities = new ArrayList<>();
-            for (Cities city : Cities.values()) {
-                cities.add(city);
-            }
-            startingData.setCitiesList(cities);
-
             /* Set initial data */
             database.setStartingData(startingData);
 
@@ -129,10 +121,10 @@ public class InfoReaderWriter {
             List<AnnualChange> annualChanges = new ArrayList<>();
 
             /* Get each change */
-            for (int i = 0; i < changes.size(); ++i) {
+            for (Object change : changes) {
 
                 /* Get each change */
-                JSONObject my_change = (JSONObject) changes.get(i);
+                JSONObject my_change = (JSONObject) change;
 
                 /* Get new budget */
                 output = (long) my_change.get("newSantaBudget");
@@ -141,9 +133,9 @@ public class InfoReaderWriter {
                 /* Get new gifts */
                 giftsArray = (JSONArray) my_change.get("newGifts");
                 giftList = new ArrayList<>();
-                for (int j = 0; j < giftsArray.size(); ++j) {
+                for (Object o : giftsArray) {
                     /* Get each gift */
-                    JSONObject my_gift = (JSONObject) giftsArray.get(j);
+                    JSONObject my_gift = (JSONObject) o;
 
                     /* Get product name */
                     String product_name = (String) my_gift.get("productName");
@@ -162,9 +154,9 @@ public class InfoReaderWriter {
                 /* Get new children */
                 children = (JSONArray) my_change.get("newChildren");
                 childList = new ArrayList<>();
-                for (int j = 0; j < children.size(); ++j) {
+                for (Object child : children) {
                     /* Get each child */
-                    JSONObject my_child = (JSONObject) children.get(j);
+                    JSONObject my_child = (JSONObject) child;
 
                     /* Get id */
                     output = (long) my_child.get("id");
@@ -203,13 +195,13 @@ public class InfoReaderWriter {
                 JSONArray updates = (JSONArray) my_change.get("childrenUpdates");
                 List<ChildUpdate> updateList = new ArrayList<>();
 
-                for (int j = 0; j < updates.size(); ++j) {
+                for (Object update : updates) {
                     /* Get each update */
-                    JSONObject my_update = (JSONObject) updates.get(j);
+                    JSONObject my_update = (JSONObject) update;
 
                     /* Get id */
                     var tmp = my_update.get("id");
-                    if(tmp == null)
+                    if (tmp == null)
                         continue;
                     output = (long) my_update.get("id");
                     int id = (int) output;
@@ -243,7 +235,7 @@ public class InfoReaderWriter {
         }
     }
 
-    public void writeInfo(SantaDatabase database, String outputFile) throws IOException {
+    public void writeInfo(SantaDatabase database, String outputFile) {
 
         /* The big box */
         JSONObject obj = new JSONObject();
@@ -343,6 +335,7 @@ public class InfoReaderWriter {
                         for (var gift : list_of_gifts) {
                             if (budget >= min_price && min_price == gift.getPrice()) {
                                 mygifts.add(gift);
+                                budget -= min_price;
                                 break;
                             }
                         }

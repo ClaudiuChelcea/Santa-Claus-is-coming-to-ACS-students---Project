@@ -23,6 +23,8 @@ public class Helper {
                 return Cities.BUZAU;
             case "Cluj":
                 return Cities.CLUJ;
+            case "Cluj-Napoca":
+                return Cities.CLUJ;
             case "Craiova":
                 return Cities.CRAIOVA;
             case "Iasi":
@@ -37,6 +39,9 @@ public class Helper {
     }
 
     public static String getCityName(Cities city_name) {
+        if(city_name == null)
+            return "";
+
         switch(city_name) {
             case BUCURESTI:
                 return "Bucuresti";
@@ -49,7 +54,7 @@ public class Helper {
             case BUZAU:
                 return "Buzau";
             case CLUJ:
-                return "Cluj";
+                return "Cluj-Napoca";
             case CRAIOVA:
                 return "Craiova";
             case IASI:
@@ -59,7 +64,7 @@ public class Helper {
             case TIMISOARA:
                 return "Timisoara";
             default:
-                return null;
+                return "";
         }
     }
 
