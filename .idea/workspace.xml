@@ -4,19 +4,13 @@
     <list default="true" id="d662010a-d6c5-4bb5-92a6-5b13c2206c94" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/checkstyle.txt" beforeDir="false" afterPath="$PROJECT_DIR$/checkstyle.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/out_1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/out_2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/SantaDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/SantaDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/initialData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/initialData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database_interfaces/Observable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database_interfaces/Observable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database_interfaces/Observer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database_interfaces/Observer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataobjects/AnnualChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/AnnualChange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataobjects/Child.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/Child.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/out_1.json" beforeDir="false" afterPath="$PROJECT_DIR$/output/out_1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/out_2.json" beforeDir="false" afterPath="$PROJECT_DIR$/output/out_2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/out_3.json" beforeDir="false" afterPath="$PROJECT_DIR$/output/out_3.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataobjects/SantaChildView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test3.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test3.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,14 +110,9 @@
           <option name="timeStamp" value="1" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java</url>
-          <line>321</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/inputoutput/InfoReaderWriter.java</url>
-          <line>292</line>
-          <option name="timeStamp" value="26" />
+          <url>file://$PROJECT_DIR$/src/main/Main.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -131,6 +120,7 @@
       <pinned-members>
         <PinnedItemInfo parentTag="org.json.simple.JSONObject" memberName="entrySet" />
         <PinnedItemInfo parentTag="database.SantaDatabase" memberName="annualChanges" />
+        <PinnedItemInfo parentTag="dataobjects.SantaChildView" memberName="my_gifts" />
         <PinnedItemInfo parentTag="java.lang.Double" memberName="value" />
         <PinnedItemInfo parentTag="org.json.simple.JSONObject" memberName="table" />
       </pinned-members>
@@ -142,7 +132,13 @@
         <watch expression="newChildList.get(0).istoricScoruriCumintenie" />
         <watch expression="newChildList" language="JAVA" />
         <watch expression="newChildList" language="JAVA" />
+        <watch expression="database" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/proiect1$Main.ic" NAME="Main Coverage Results" MODIFIED="1641745602309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>main.*</FILTER>
+    </SUITE>
   </component>
 </project>

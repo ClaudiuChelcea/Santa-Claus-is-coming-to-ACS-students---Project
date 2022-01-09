@@ -15,6 +15,7 @@ public class SantaChildView extends Child {
     private List<Double> istoricScoruriCumintenie = new ArrayList<>();
     private Double individualAverageScore = 0d;
     private Double my_budget = 0d;
+    public List<Gift> my_gifts = new ArrayList<>();
 
     /* Constructor */
     public SantaChildView(Child child) {
@@ -34,6 +35,7 @@ public class SantaChildView extends Child {
                 istoricScoruriCumintenie.add(this.getNiceScore());
             calculateIndividualAverageScore();
             setMy_budget(this.getIndividualAverageScore() * SantaDatabase.instance.getSantaBudget() / SantaChildDatabase.getGeneralAverageScore());
+
         }
     }
 
@@ -119,6 +121,18 @@ public class SantaChildView extends Child {
 
     public void setMy_budget(Double my_budget) {
         this.my_budget = my_budget;
+    }
+
+    public void setIstoricScoruriCumintenie(List<Double> istoricScoruriCumintenie) {
+        this.istoricScoruriCumintenie = istoricScoruriCumintenie;
+    }
+
+    public List<Gift> getMy_gifts() {
+        return my_gifts;
+    }
+
+    public void setMy_gifts(List<Gift> my_gifts) {
+        this.my_gifts = my_gifts;
     }
 
     @Override

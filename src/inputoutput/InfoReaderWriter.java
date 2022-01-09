@@ -240,14 +240,6 @@ public class InfoReaderWriter {
         /* The big box */
         JSONObject obj = new JSONObject();
 
-//        for (var list_of_children : SantaDatabase.anual_childs) {
-//            for (var child : list_of_children) {
-//                System.out.println(child);
-//                System.out.println(child.getBudget());
-//            }
-//            System.out.println("\n----------------- New generation ----------------\n");
-//        }
-
         /* Array of arrays of children */
         JSONArray annualChildren = new JSONArray();
 
@@ -290,59 +282,8 @@ public class InfoReaderWriter {
                 child_json.put("assignedBudget", final_budget);
 
                 JSONArray receivedGifts = new JSONArray();
-                ArrayList<Gift> mygifts = new ArrayList<>();
-                var preferences = child.getGiftsPreferences();
-                var our_gifts = SantaDatabase.getInstance().getStartingData().getGiftsList();
-                var budget = SantaDatabase.getInstance().getSantaBudget();
 
-                for (var preference : preferences) {
-                    ArrayList<Integer> gift_with_indexes = new ArrayList<>();
-                    int ind = 0;
-                    for (var gift : our_gifts) {
-                        if (preference == gift.getGiftCategory()) {
-                            gift_with_indexes.add(ind);
-                        }
-                        ind++;
-                    }
-
-                    /* No gift in that category */
-                    if (gift_with_indexes.size() == 0) {
-                        continue;
-                    }
-
-                    /* Only one gift in that category */
-                    else if (gift_with_indexes.size() == 1) {
-                        if (budget >= our_gifts.get(gift_with_indexes.get(0)).getPrice()) {
-                            budget -= our_gifts.get(gift_with_indexes.get(0)).getPrice();
-                            mygifts.add(our_gifts.get(gift_with_indexes.get(0)));
-                        }
-                    }
-
-                    /* More gifts in that category */
-                    else {
-                        List<Gift> list_of_gifts = new ArrayList<>();
-                        for (int k = 0; k < gift_with_indexes.size(); ++k) {
-                            list_of_gifts.add(our_gifts.get(gift_with_indexes.get(k)));
-                        }
-
-                        Double min_price = Double.MAX_VALUE;
-                        for (var gift : list_of_gifts) {
-                            if (min_price > gift.getPrice()) {
-                                min_price = gift.getPrice();
-                            }
-                        }
-
-                        for (var gift : list_of_gifts) {
-                            if (budget >= min_price && min_price == gift.getPrice()) {
-                                mygifts.add(gift);
-                                budget -= min_price;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                for (var gift : mygifts) {
+                for (var gift : child.getMy_gifts()) {
                     JSONObject simple_gift = new JSONObject();
                     simple_gift.put("productName", gift.getProductName());
                     simple_gift.put("price", gift.getPrice());

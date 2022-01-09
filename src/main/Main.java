@@ -28,8 +28,7 @@ public final class Main {
         InfoReaderWriter my_reader = new InfoReaderWriter();
 
         /* Execute tests */
-        var nr_tests = Constants.TESTS_NUMBER;
-        for(int i = 1; i <= 3; ++i) {
+        for(int i = 1; i <= 4; ++i) {
             /* Input and output files */
             String inFile = Constants.INPUT_PATH + i + Constants.FILE_EXTENSION;
             String outFile = Constants.OUTPUT_PATH + i + Constants.FILE_EXTENSION;

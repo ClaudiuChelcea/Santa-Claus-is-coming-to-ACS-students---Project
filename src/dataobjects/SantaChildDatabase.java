@@ -19,6 +19,7 @@ public class SantaChildDatabase implements Observer {
             var new_child = new SantaChildView(child);
 
             new_child.calculateBudget();
+            giveGiftToChild(new_child);
             newChildList.add(new_child);
         }
 
@@ -31,76 +32,100 @@ public class SantaChildDatabase implements Observer {
 
     @Override
     public void update(List<Child> children) {
+        var oldChildList = newChildList;
         newChildList = new ArrayList<>();
+
         for(var child : children) {
             if(child.getAge() > 18)
                 continue;
             var new_child = new SantaChildView(child);
             new_child.calculateBudget();
+            new_child.setMy_gifts(getChildById(oldChildList, child.getId()).getMy_gifts());
             newChildList.add(new_child);
         }
     }
 
+    private static SantaChildView getChildById(int id) {
+        for(var child : newChildList) {
+            if(child.getId() == id)
+                return child;
+        }
+
+        return null;
+    }
+
     public static double getGeneralAverageScore() {
         double averageScoreSum = 0;
-        for(var item : newChildList) {
-            averageScoreSum += item.getIndividualAverageScore();
+
+        List<Integer> id_list = new ArrayList<>();
+        for(var child : newChildList)
+            id_list.add(child.getId());
+
+        for(int i = 0; i < id_list.size(); ++i) {
+            averageScoreSum += getChildById(id_list.get(i)).getIndividualAverageScore();
         }
 
         return averageScoreSum;
     }
 
-    public static void giveGifts() {
-        for(var child : newChildList) {
-            var preferences = child.getGiftsPreferences();
-            var our_gifts = SantaDatabase.getInstance().getStartingData().getGiftsList();
-            child.calculateBudget();
-            var budget = child.getMy_budget();
+    private static void giveGiftToChild(SantaChildView child) {
+        ArrayList<Gift> mygifts = new ArrayList<>();
+        var preferences = child.getGiftsPreferences();
+        var our_gifts = SantaDatabase.getInstance().getStartingData().getGiftsList();
+        var budget = child.getMy_budget();
 
-            for(var preference : preferences) {
-                ArrayList<Integer> gift_with_indexes = new ArrayList<>();
-                int ind = 0;
-                for(var gift : our_gifts) {
-                    if(preference == gift.getGiftCategory()) {
-                        gift_with_indexes.add(ind);
-                    }
-                    ind++;
+        for (var preference : preferences) {
+            ArrayList<Integer> gift_with_indexes = new ArrayList<>();
+            int ind = 0;
+            for (var gift : our_gifts) {
+                if (preference == gift.getGiftCategory()) {
+                    gift_with_indexes.add(ind);
+                }
+                ind++;
+            }
+
+            /* No gift in that category */
+            if (gift_with_indexes.size() == 0) {
+                continue;
+            }
+
+            /* Only one gift in that category */
+            else if (gift_with_indexes.size() == 1) {
+                if (budget >= our_gifts.get(gift_with_indexes.get(0)).getPrice()) {
+                    budget -= our_gifts.get(gift_with_indexes.get(0)).getPrice();
+                    mygifts.add(our_gifts.get(gift_with_indexes.get(0)));
+                }
+            }
+
+            /* More gifts in that category */
+            else {
+                List<Gift> list_of_gifts = new ArrayList<>();
+                for (int k = 0; k < gift_with_indexes.size(); ++k) {
+                    list_of_gifts.add(our_gifts.get(gift_with_indexes.get(k)));
                 }
 
-                /* No gift in that category */
-                if(gift_with_indexes.size() == 0)
-                    continue;
-
-                /* Only one gift in that category */
-                if(gift_with_indexes.size() == 1)
-                    if(budget >= our_gifts.get(gift_with_indexes.get(0)).getPrice()) {
-                        budget -= our_gifts.get(gift_with_indexes.get(0)).getPrice();
-                        // System.out.println("Received " + our_gifts.get(gift_with_indexes.get(0)).getProductName());
+                Double min_price = Double.MAX_VALUE;
+                for (var gift : list_of_gifts) {
+                    if (min_price > gift.getPrice()) {
+                        min_price = gift.getPrice();
                     }
-                        /* and allocate gift to him */
+                }
 
-                /* More gifts in that category */
-                else if(gift_with_indexes.size() > 1) {
-                    List<Gift> list_of_gifts = new ArrayList<>();
-                    for(int i = 0; i < gift_with_indexes.size(); ++i) {
-                        list_of_gifts.add(our_gifts.get(gift_with_indexes.get(i)));
-                    }
-
-                    Double min_price = Double.MAX_VALUE;
-                    int min_price_index = 0;
-                    for(var gift : list_of_gifts) {
-                        if(min_price > gift.getPrice()) {
-                            min_price = gift.getPrice();
-                        }
-                        min_price_index++;
-                    }
-
-                    if(budget >= min_price) {
+                for (var gift : list_of_gifts) {
+                    if (budget >= min_price && min_price == gift.getPrice()) {
+                        mygifts.add(gift);
                         budget -= min_price;
-                        // System.out.println("Received " + our_gifts.get(gift_with_indexes.get(min_price_index)).getProductName());
+                        break;
                     }
                 }
             }
+        }
+        child.setMy_gifts(mygifts);
+    }
+
+    public static void giveGifts() { ArrayList<Gift> mygifts = new ArrayList<>();
+        for(var child : newChildList) {
+            giveGiftToChild(child);
         }
     }
 
@@ -115,17 +140,14 @@ public class SantaChildDatabase implements Observer {
                 tmp.setAge(new_age);
             }
         }
+    }
 
-//        var iterator2 = newChildList.iterator();
-//        while(iterator2.hasNext()) {
-//            var child = iterator2.next();
-//            int new_Age = child.getAge() + 1;
-//            if(new_Age > 18) {
-//                iterator2.remove();
-//            } else {
-//                child.setAge(new_Age);
-//            }
-//        }
+    private static SantaChildView getChildById(List<SantaChildView> list, int id) {
+        for(var el : list) {
+            if(el.getId() == id)
+                return el;
+        }
+        return null;
     }
 
     public static void executeUpdate(int index) {
@@ -153,10 +175,13 @@ public class SantaChildDatabase implements Observer {
         }
 
         /* Update the new list */
+        var old_list = newChildList;
         newChildList = new ArrayList<>();
         for(var child : SantaDatabase.getInstance().getStartingData().getChildrenList()) {
+            var old_child = getChildById(old_list, child.getId());
             var new_child = new SantaChildView(child);
             new_child.calculateBudget();
+            new_child.setMy_gifts(old_child.getMy_gifts());
             newChildList.add(new_child);
         }
 
